@@ -15,15 +15,20 @@ predicate AddLiquidity {
     state provider_lp_balance = mut storage::lp_balances[provider];
     state total_supply_lp = mut storage::total_supply_lp;
 
-    // Ensure equal value is added for both tokens (maintain ratio)
-    constraint amount_usdc * reserve_ess == amount_ess * reserve_usdc;
+    // Calculate liquidity to mint
+    const MINIMUM_LIQUIDITY: int = 1000;  // Define an appropriate minimum
+
+    var mint_lp = cond {
+        total_supply_lp == 0 => sqrt(amount_usdc * amount_ess) - MINIMUM_LIQUIDITY,
+        else => min((amount_usdc / (amount_usdc + reserve_usdc) * (total_supply_lp +amount_usdc) , 
+                    (amount_ess / (amount_ess + reserve_ess) * (total_supply_lp +amount_ess))
+    };
 
     // Update the reserves
     constraint reserve_usdc' == reserve_usdc + amount_usdc;
     constraint reserve_ess' == reserve_ess + amount_ess;
 
-    // Mint LP tokens based on the value added to the pool
-    var mint_lp: int = (amount_usdc + amount_ess) / 2;
+    // Mint LP tokens
     constraint total_supply_lp' == total_supply_lp + mint_lp;
     constraint provider_lp_balance' == provider_lp_balance + mint_lp;
 }
