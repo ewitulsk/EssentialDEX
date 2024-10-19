@@ -4,13 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest" 
+    "test": "jest"
   },
   "type": "module",
   "devDependencies": {
     "@babel/preset-typescript": "^7.25.7",
     "jest": "^29.7.0",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "@noble/curves": "^1.6.0",
