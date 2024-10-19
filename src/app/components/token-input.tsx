@@ -43,8 +43,7 @@ const TokenInput = ({
             value={selectedOption}
             onChange={(option) => onTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
             options={tokenOptions}
-            placeholder="Select token"
-            className="flex-1"
+            placeholder="Select "
             classNamePrefix="react-select"
             styles={{
               control: (provided) => ({
@@ -52,10 +51,15 @@ const TokenInput = ({
                 backgroundColor: '#1f2937',
                 borderColor: '#374151',
                 color: 'white',
+                padding: '2px',
+                width: '140px', // Set a fixed width for the select
+                marginLeft: 'auto', // Push the select to the right
               }),
               menu: (provided) => ({
                 ...provided,
                 backgroundColor: '#1f2937',
+                width: '140px', // Match the width of the control
+                right: 0, // Align the dropdown to the right
               }),
               option: (provided, state) => ({
                 ...provided,
@@ -67,7 +71,7 @@ const TokenInput = ({
                 color: 'white',
               }),
             }}
-            formatOptionLabel={({ value, label, icon: Icon }) => (
+            formatOptionLabel={({ label, icon: Icon }) => (
               <div className="flex items-center">
                 {Icon && <Icon className="w-5 h-5 mr-2" />}
                 <span>{label}</span>
