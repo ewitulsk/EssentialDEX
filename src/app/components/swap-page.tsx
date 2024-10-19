@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import TokenInput from './token-input';
 const SwapPage = () => {
   const [sellAmount, setSellAmount] = useState('');
-  const [selectedSellToken, setSelectedSellToken] = useState('');
+  const [selectedSellToken, setSelectedSellToken] = useState('ETH');
   const [buyAmount, setBuyAmount] = useState('');
-  const [selectedBuyToken, setSelectedBuyToken] = useState('');
+  const [selectedBuyToken, setSelectedBuyToken] = useState();
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value);
   const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSellToken(e.target.value);
