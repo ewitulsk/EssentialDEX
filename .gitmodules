@@ -1,0 +1,3 @@
+[submodule "contracts/test_framework/src/Essential-TS-SDK"]
+	path = contracts/test_framework/src/Essential-TS-SDK
+	url = git@github.com:ewitulsk/Essential-TS-SDK.git

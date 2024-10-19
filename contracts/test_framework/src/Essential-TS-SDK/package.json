@@ -1,0 +1,30 @@
+{
+  "name": "TS-SDK",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --testTimeout=100000000" 
+  },
+  "type": "module",
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.25.7",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.6.0",
+    "@noble/hashes": "^1.5.0",
+    "@noble/secp256k1": "^2.1.0",
+    "@types/jest": "^29.5.13",
+    "@types/secp256k1": "^4.0.6",
+    "axios": "^1.7.7",
+    "axios-http2-adapter": "^1.0.1",
+    "fetch-h2": "^3.0.2",
+    "http2-wrapper": "^2.2.1",
+    "node-fetch": "^3.3.2",
+    "secp256k1": "^5.0.0",
+    "ts-node": "^10.9.2"
+  }
+}
