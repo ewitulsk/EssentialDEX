@@ -37,7 +37,7 @@ const TokenInput = ({
             value={amount}
             onChange={onAmountChange}
             placeholder="0"
-            className="flex-2 p-2 rounded bg-gray-800 border border-gray-700 text-white"
+            className="flex-2 p-2 rounded bg-gray-800 border border-gray-700 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           <Select
             value={selectedOption}
