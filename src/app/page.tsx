@@ -16,6 +16,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
+        <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
         <div className="flex flex-col w-full">
           <div className="flex space-x-4 mb-6">
             <button onClick={() => setActiveView('Swap')} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === 'Swap' ? 'bg-purple-700' : ''}`}>Swap</button>
