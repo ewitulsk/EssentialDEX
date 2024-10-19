@@ -3,6 +3,13 @@ import SwapPage from "./components/swap-page";
 import { useState } from "react";
 export default function Home() {
   const [activeView, setActiveView] = useState('Swap');
+
+  const navOptions = [
+    { header: 'Exact/Exact', component: SwapPage },
+    { header: 'Exact/Market', component: SwapPage },
+    { header: 'Exact/Range', component: SwapPage }
+  ];
+
   return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
       {/* Concentric Circles Background */}
@@ -19,16 +26,14 @@ export default function Home() {
         <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
         <div className="flex flex-col w-full">
           <div className="flex space-x-4 mb-6">
-            <button onClick={() => setActiveView('Swap')} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === 'Swap' ? 'bg-purple-700' : ''}`}>Swap</button>
-            <button onClick={() => setActiveView('Limit')} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === 'Limit' ? 'bg-purple-700' : ''}`}>Limit</button>
-            <button onClick={() => setActiveView('Send')} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === 'Send' ? 'bg-purple-700' : ''}`}>Send</button>
-            <button onClick={() => setActiveView('Buy')} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === 'Buy' ? 'bg-purple-700' : ''}`}>Buy</button>
+            {navOptions.map((option) => (
+              <button onClick={() => setActiveView(option.header)} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === option.header ? 'bg-purple-700' : ''}`}>{option.header}</button>
+            ))}
           </div>
           <div className="swap-pages">
-            {activeView === 'Swap' && <SwapPage header="Swap" />}
-            {activeView === 'Limit' && <SwapPage header="Limit" />}
-            {activeView === 'Send' && <SwapPage header="Send" />}
-            {activeView === 'Buy' && <SwapPage header="Buy" />}
+            {activeView === 'Exact/Exact' && <SwapPage header="Exact/Exact" />}
+            {activeView === 'Exact/Market' && <SwapPage header="Exact/Market" />}
+            {activeView === 'Exact/Range' && <SwapPage header="Exact/Range" />}
           </div>
         </div>
       </main>
