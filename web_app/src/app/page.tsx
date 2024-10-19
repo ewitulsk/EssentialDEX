@@ -2,13 +2,14 @@
 import SwapPage from "./components/swap-page";
 import { useState } from "react";
 export default function Home() {
-  const [activeView, setActiveView] = useState('Swap');
-
   const navOptions = [
     { header: 'Exact/Exact', component: SwapPage },
     { header: 'Exact/Market', component: SwapPage },
     { header: 'Exact/Range', component: SwapPage }
   ];
+
+  const [activeView, setActiveView] = useState(navOptions[0].header);
+
 
   return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
@@ -31,9 +32,9 @@ export default function Home() {
             ))}
           </div>
           <div className="swap-pages">
-            {activeView === 'Exact/Exact' && <SwapPage header="Exact/Exact" />}
-            {activeView === 'Exact/Market' && <SwapPage header="Exact/Market" />}
-            {activeView === 'Exact/Range' && <SwapPage header="Exact/Range" />}
+            {navOptions.map((option) => (
+              activeView === option.header && <option.component key={option.header} header={option.header} />
+            ))}
           </div>
         </div>
       </main>
