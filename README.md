@@ -4,10 +4,11 @@ Welcome to our project! This repository contains the code for the first decentra
 ## Project Overview
 ### What We Built
 
-    Decentralized Exchange (DEX): Our DEX allows users to:
-        Add/remove liquidity using token pairs and receive LP tokens, representing their share of the liquidity pool.
-        Swap tokens within the liquidity pools, with prices adjusted automatically based on the AMM (Automated Market Maker) model.
-        Earn LP tokens for providing liquidity and share in transaction fees as passive income.
+Decentralized Exchange (DEX): Our DEX allows users to:
+
+- Add/remove liquidity using token pairs and receive LP tokens, representing their share of the liquidity pool.
+- Swap tokens within the liquidity pools, with prices adjusted automatically based on the AMM (Automated Market Maker) model.
+- Earn LP tokens for providing liquidity and share in transaction fees as passive income.
 
 ### Key Features:
 
@@ -35,6 +36,6 @@ We have a number of exciting plans for the future, including:
 
 To run the project locally:
 
-    Clone the repo.
-    Install dependencies using npm install.
-    Start the local development server with npm run dev.
+Clone the repo.
+Install dependencies using npm install.
+Start the local development server with npm run dev.
