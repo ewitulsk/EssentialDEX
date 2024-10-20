@@ -12,7 +12,7 @@ export default function Home() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <NewPosition />,
+      element: <SwapWrapper />,
     },
     {
       path: "/pool",

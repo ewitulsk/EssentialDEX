@@ -123,8 +123,8 @@ const SwapPage = () => {
         </div>
       </form>
 
-      <ReviewModal showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap} setShowReviewModal={setShowReviewModal}/>
-      <WaitingSolveModal showModal={showModal} />
+      <ReviewModal header='Processing Your Swap' showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap} setShowReviewModal={setShowReviewModal}/>
+      <WaitingSolveModal showModal={showModal} header='Processing Your Swap' />
       <Snackbar showSnackbar={showSnackbar} />
     </div>
   );

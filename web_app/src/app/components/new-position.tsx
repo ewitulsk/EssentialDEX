@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Header from "./header";
 import TokenInput from "./token-input";
 import CustomSelect from './custom-select';
+import WaitingSolveModal from './waiting-solve-modal';
+import Snackbar from './snackbar';
 
 const NewPosition: React.FC = () => {
 
@@ -12,16 +14,32 @@ const NewPosition: React.FC = () => {
   const [selectedSellToken, setSelectedSellToken] = useState("ethereum");
   const [buyAmount, setBuyAmount] = useState();
   const [selectedBuyToken, setSelectedBuyToken] = useState("usd");
+  const [showModal, setShowModal] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value);
   const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSellToken(e.target.value);
   const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value);
   const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedBuyToken(e.target.value);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Selling: ${sellAmount} ${selectedSellToken}, Buying: ${buyAmount} ${selectedBuyToken}`);
-  };
+
+    setShowModal(true);
+    setTimeout(() => {
+      clearInputs()
+      setShowModal(false);
+      setShowSnackbar(true);
+      setTimeout(() => setShowSnackbar(false), 5000);
+    }, 4000);
+  }
+
+  const clearInputs = () => {
+    setSellAmount('');
+    setBuyAmount('');
+    setSelectedSellToken('ethereum');
+    setSelectedBuyToken('');
+  }
 
   return (
     <>
@@ -40,35 +58,36 @@ const NewPosition: React.FC = () => {
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
               <h2 className="text-lg font-bold">Deposit amounts</h2>
 
-              {selectedSellToken && selectedBuyToken && (
-                <>
-                  <h3 className="text-sm font-medium text-gray-400">Deposit amounts</h3>
-                  <TokenInput
-                    amount={sellAmount || ''}
-                    onAmountChange={handleSellChange}
-                    selectedToken={selectedSellToken}
-                    onTokenChange={handleSellTokenChange}
-                  />
 
-                  {/* Buy Section */}
-                  <TokenInput
-                    amount={buyAmount || ''}
-                    onAmountChange={handleBuyChange}
-                    selectedToken={selectedBuyToken}
-                    onTokenChange={handleBuyTokenChange}
-                  />
-                </>
-              )}
+              <h3 className="text-sm font-medium text-gray-400">Deposit amounts</h3>
+              <TokenInput
+                amount={sellAmount || ''}
+                onAmountChange={handleSellChange}
+                selectedToken={selectedSellToken}
+                onTokenChange={handleSellTokenChange}
+              />
+
+              {/* Buy Section */}
+              <TokenInput
+                amount={buyAmount || ''}
+                onAmountChange={handleBuyChange}
+                selectedToken={selectedBuyToken}
+                onTokenChange={handleBuyTokenChange}
+              />
 
               <button
                 type="submit"
                 className={`mt-4 p-2 bg-[${color}] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full`}
+                onClick={handleSubmit}
                 >
-                REVIEW POSITION
+                Approve
               </button>
             </form>
           </div>
         </main>
+
+        <WaitingSolveModal showModal={showModal} header='Processing Your Swap' />
+        <Snackbar showSnackbar={showSnackbar} message={'Deposit successful'}/>
 
         {/* Footer */}
         <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center z-10">
