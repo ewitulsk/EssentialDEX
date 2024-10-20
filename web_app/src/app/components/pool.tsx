@@ -1,9 +1,18 @@
 // web_app/src/app/components/Header.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "./header";
 import { Link } from 'react-router-dom';
 import Circles from "./circles";
+import { lp_bal } from '../ess/helpers';
+
 const Pool: React.FC = () => {
+
+  useEffect(() => {
+    const getLpBal = async () => {
+      console.log(await lp_bal(1))
+    }
+    getLpBal()
+  })
   return (
     <>
       <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
