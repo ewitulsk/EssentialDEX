@@ -1,9 +1,8 @@
 import {
-  TokenBTC,
   TokenETH,
   TokenUSDC
 } from '@web3icons/react'
-import Select from 'react-select'
+import CustomSelect from './custom-select'
 
 const TokenInput = ({
   label,
@@ -42,45 +41,11 @@ const TokenInput = ({
             className="flex-2 p-2 rounded bg-gray-800 border border-gray-700 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             disabled={disabled}
           />
-          <Select
+          <CustomSelect
             isDisabled={disabled}
             value={selectedOption}
             onChange={(option) => onTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
             options={tokenOptions}
-            placeholder="Select "
-            classNamePrefix="react-select"
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                backgroundColor: '#1f2937',
-                borderColor: '#374151',
-                color: 'white',
-                padding: '2px',
-                width: '140px', // Set a fixed width for the select
-                marginLeft: 'auto', // Push the select to the right
-              }),
-              menu: (provided) => ({
-                ...provided,
-                backgroundColor: '#1f2937',
-                width: '140px', // Match the width of the control
-                right: 0, // Align the dropdown to the right
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isFocused ? '#374151' : '#1f2937',
-                color: 'white',
-              }),
-              singleValue: (provided) => ({
-                ...provided,
-                color: 'white',
-              }),
-            }}
-            formatOptionLabel={({ label, icon: Icon }) => (
-              <div className="flex items-center">
-                {Icon && <Icon className="w-5 h-5 mr-2" />}
-                <span>{label}</span>
-              </div>
-            )}
           />
         </div>
       </div>
