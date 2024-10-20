@@ -11,7 +11,7 @@ const Header: React.FC<{ color: string }> = ({ color }) => {
         <Image
           src={logo}
           alt="PintSwap Logo"
-          className="h-8 w-12 mr-2"
+          className="h-18 w-12 mr-2"
         />
         <span className="font-bold text-sm leading-5" style={{ fontWeight: 600 }}>PINTSWAP</span>
       </div>
