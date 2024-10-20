@@ -7,7 +7,8 @@ import { debounce } from 'lodash';
 const SwapPage = () => {
 
   const fetchConversionRate = async (sellToken: string, buyToken: string, setAmount: (amount: string) => void) => {
-    if (!sellToken || !buyToken || sellToken !== buyToken) return;
+    if (!sellToken || !buyToken || sellToken === buyToken) return;
+
     try {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${sellToken}&vs_currencies=${buyToken}`
