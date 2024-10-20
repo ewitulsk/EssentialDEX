@@ -1,18 +1,9 @@
 'use client'
-import SwapPage from "./components/swap-page";
-import { useState } from "react";
 import Header from "./components/header";
+import SwapWrapper from "./components/swap-wrapper";
+
 export default function Home() {
-  const navOptions = [
-    { header: 'Swap', component: SwapPage },
-    { header: 'Limit', component: SwapPage },
-    { header: 'Send', component: SwapPage },
-    { header: 'Buy', component: SwapPage }
-  ];
-
-  const [activeView, setActiveView] = useState(navOptions[0].header)
-
-  return (
+    return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
 
       <div className="absolute inset-0 pointer-events-none">
@@ -26,20 +17,7 @@ export default function Home() {
       <Header />
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
-
-        <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
-        <div className="flex flex-col w-full">
-          <div className="flex space-x-4 mb-6">
-            {navOptions.map((option) => (
-              <button onClick={() => setActiveView(option.header)} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === option.header ? 'bg-purple-700' : ''}`}>{option.header}</button>
-            ))}
-          </div>
-          <div className="swap-pages">
-            {navOptions.map((option) => (
-              activeView === option.header && <option.component key={option.header} />
-            ))}
-          </div>
-        </div>
+        <SwapWrapper />
       </main>
 
       {/* Footer */}
