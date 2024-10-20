@@ -1,49 +1,175 @@
+use mylibrary::lib::@delta;
+use mylibrary::lib::@safe_increment;
+use mylibrary::lib::@init_once;
+use mylibrary::lib::@init_delta;
+use mylibrary::lib::@verify_key;
+use mylibrary::lib::@check_if_predicate_owns;
+//use mylibrary::lib::Secp256k1Signature;
+//use mylibrary::lib::PredicateAddress;
+use mylibrary::lib::@min;
+use mylibrary::lib::@sqrt;
+
 storage {
     reserve_usdc: int,  // Reserves for USDC
     reserve_ess: int,   // Reserves for Ess Coin
-    // total_supply_lp: int,  // Total LP tokens issued
-    // lp_balances: (b256 => int),  // LP token balances per user
+    total_supply_lp: int,  // Total LP tokens issued
+    lp_balances: (b256 => int),  // LP token balances per user
+    nonces: (b256 => int),  // Nonces for auth
+    usdc_balances: (b256 => int),  // USDC balances per user
+    ess_balances: (b256 => int),  // Ess Coin balances per user
+}
+
+//union LiquidityAuth = Signed(Secp256k1Signature) | Predicate(PredicateAddress);
+
+predicate MintTokenUsdc {
+    pub var to: b256;
+    pub var amount: int;
+    
+    state usdc_balance = mut storage::usdc_balances[to];
+
+    constraint usdc_balance' - usdc_balance == amount;
+
+}
+
+predicate MintTokenEss {
+    pub var to: b256;
+    pub var amount: int;
+    
+    state ess_balance = mut storage::ess_balances[to];
+
+    constraint ess_balance' - ess_balance == amount;
+    
 }
 
 predicate AddLiquidity {
-    // var provider: b256;
-    var amount_usdc: int;
-    // var amount_ess: int;
-    
+    pub var provider: b256;
+    pub var amount_usdc: int;
+    pub var amount_ess: int;
+
+   // var auth: LiquidityAuth;
+    //const MINIMUM_LIQUIDITY: int = 1000; 
+
     state reserve_usdc = mut storage::reserve_usdc;
     state reserve_ess = mut storage::reserve_ess;
+    state provider_lp_balance = mut storage::lp_balances[provider];
+    state total_supply_lp = mut storage::total_supply_lp;
+    state nonce = mut storage::nonces[provider];
+    state provider_usdc_balance = mut storage::usdc_balances[provider];
+    state provider_ess_balance = mut storage::ess_balances[provider];
 
-    constraint reserve_usdc' == amount_usdc;
+    // Calculate liquidity to mint
+    var lp_usdc = (amount_usdc * total_supply_lp) / (reserve_usdc + amount_usdc);
+    var lp_ess = (amount_ess * total_supply_lp) / (reserve_ess + amount_ess);
 
 
-    // state provider_lp_balance = mut storage::lp_balances[provider];
-    
-    // Update the reserves
-    // constraint (reserve_usdc == nil && reserve_usdc' == amount_usdc) || reserve_usdc' == reserve_usdc + amount_usdc;
-    // constraint reserve_ess' == reserve_ess + amount_ess;
+var mint_lp = cond {
+    total_supply_lp == 0 => @sqrt(amount_usdc * amount_ess) //- MINIMUM_LIQUIDITY,
+    else => @min(
+        amount_usdc / (amount_usdc + reserve_usdc) * (total_supply_lp + amount_usdc);
+        amount_ess / (amount_ess + reserve_ess) * (total_supply_lp + amount_ess)
+    )
+};
+
+    // Use @delta for balance changes
+    constraint @delta(reserve_usdc) == amount_usdc;
+    constraint @delta(reserve_ess) == amount_ess;
+    constraint @delta(total_supply_lp) == mint_lp;
+    constraint @delta(provider_lp_balance) == mint_lp;
+    constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
+    constraint @delta(provider_ess_balance) == 0 - amount_ess;
+
+    // Increment the nonce
+    constraint @safe_increment(nonce);
+
+    // Check authorization
+//    constraint match auth {
+//        LiquidityAuth::Signed(sig) => @verify_key({provider, amount_usdc, amount_ess, nonce'}; sig; provider),
+//        LiquidityAuth::Predicate(addr) => @check_if_predicate_owns(addr; provider),
+//    };
 }
 
 predicate RemoveLiquidity {
-//     // var provider: b256;
-//     // var lp_amount: int;
+    pub var provider: b256;
+    pub var lp_amount: int;
 
-//     // state reserve_usdc = mut storage::reserve_usdc;
-//     // state reserve_ess = mut storage::reserve_ess;
-//     // state provider_lp_balance = mut storage::lp_balances[provider];
-//     // state total_supply_lp = mut storage::total_supply_lp;
+//    var auth: LiquidityAuth;
 
-//     // // Ensure the provider has enough LP tokens
-//     // constraint lp_amount <= provider_lp_balance;
+    state reserve_usdc = mut storage::reserve_usdc;
+    state reserve_ess = mut storage::reserve_ess;
+    state provider_lp_balance = mut storage::lp_balances[provider];
+    state total_supply_lp = mut storage::total_supply_lp;
+    state nonce = mut storage::nonces[provider];
 
-//     // // Calculate the amounts of USDC and Ess Coin to be withdrawn
-//     // var withdraw_usdc: int = lp_amount * reserve_usdc / total_supply_lp;
-//     // var withdraw_ess: int = lp_amount * reserve_ess / total_supply_lp;
+    // Ensure the provider has enough LP tokens
+    constraint lp_amount <= provider_lp_balance;
 
-//     // // Update the reserves
-//     // constraint reserve_usdc' == reserve_usdc - withdraw_usdc;
-//     // constraint reserve_ess' == reserve_ess - withdraw_ess;
+    // Calculate the amounts of USDC and Ess Coin to be withdrawn
+    var withdraw_usdc: int = (lp_amount * reserve_usdc) / total_supply_lp;
+    var withdraw_ess: int = (lp_amount * reserve_ess) / total_supply_lp;
 
-//     // // Burn LP tokens
-//     // constraint total_supply_lp' == total_supply_lp - lp_amount;
-//     // constraint provider_lp_balance' == provider_lp_balance - lp_amount;
+    // Use @delta for balance changes
+    constraint @delta(reserve_usdc) == 0 - withdraw_usdc;
+    constraint @delta(reserve_ess) == 0 - withdraw_ess;
+    constraint @delta(total_supply_lp) == 0 - lp_amount;
+    constraint @delta(provider_lp_balance) == 0 - lp_amount;
+
+    // Increment the nonce
+    constraint @safe_increment(nonce);
+
+    // Check authorization
+  //  constraint match auth {
+  //        LiquidityAuth::Signed(sig) => @verify_key({provider, lp_amount, nonce'}; sig; provider),
+  //      LiquidityAuth::Predicate(addr) => @check_if_predicate_owns(addr; provider),
+  //  };
+}
+
+predicate Swap {
+    pub var user: b256;
+    pub var amount_in: int;
+    pub var token_in: bool;  // true for USDC, false for Ess
+    pub var min_amount_out: int;
+
+    state reserve_usdc = mut storage::reserve_usdc;
+    state reserve_ess = mut storage::reserve_ess;
+    state user_usdc_balance = mut storage::usdc_balances[user];
+    state user_ess_balance = mut storage::ess_balances[user];
+
+    // Calculate the amount out based on the constant product formula
+    var amount_out = cond {
+        token_in => (amount_in * reserve_ess) / (reserve_usdc + amount_in),
+        else => (amount_in * reserve_usdc) / (reserve_ess + amount_in),
+    };
+
+    // Ensure the minimum amount out is met
+    constraint amount_out >= min_amount_out;
+
+    // Update reserves and balances
+    constraint reserve_usdc' == cond { token_in => reserve_usdc + amount_in, else => reserve_usdc - amount_out };
+    constraint reserve_ess' == cond { token_in => reserve_ess - amount_out, else => reserve_ess + amount_in };
+    constraint user_usdc_balance' == cond { token_in => user_usdc_balance - amount_in, else => user_usdc_balance + amount_out };
+    constraint user_ess_balance' == cond { token_in => user_ess_balance + amount_out, else => user_ess_balance - amount_in };
+}
+
+predicate Transfer {
+    pub var from: b256;
+    pub var to: b256;
+    pub var amount: int;
+    pub var token: bool;  // true for USDC, false for Ess
+
+    state from_usdc_balance = mut storage::usdc_balances[from];
+    state from_ess_balance = mut storage::ess_balances[from];
+    state to_usdc_balance = mut storage::usdc_balances[to];
+    state to_ess_balance = mut storage::ess_balances[to];
+
+    // Ensure the sender has enough balance
+    constraint cond {
+        token => amount <= from_usdc_balance,
+        else => amount <= from_ess_balance,
+    };
+
+    // Update balances
+    constraint from_usdc_balance' == cond { token => from_usdc_balance - amount, else => from_usdc_balance };
+    constraint from_ess_balance' == cond { token => from_ess_balance, else => from_ess_balance - amount };
+    constraint to_usdc_balance' == cond { token => to_usdc_balance + amount, else => to_usdc_balance };
+    constraint to_ess_balance' == cond { token => to_ess_balance, else => to_ess_balance + amount };
 }

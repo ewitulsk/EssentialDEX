@@ -4,6 +4,7 @@ kind = "contract"
 
 [dependencies]
 # Library dependencies go here.
+mylibrary = { path = "mylibrary" }
 
 [contract-dependencies]
 # Contract dependencies go here.

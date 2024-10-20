@@ -1,5 +1,5 @@
 [package]
-name = "my-library"
+name = "mylibrary"
 kind = "library"
 
 [dependencies]
