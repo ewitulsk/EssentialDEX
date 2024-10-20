@@ -1,6 +1,7 @@
 'use client'
 import SwapPage from "./components/swap-page";
 import { useState } from "react";
+import useMetaMask from "./components/meta-mask";
 export default function Home() {
   const navOptions = [
     { header: 'Exact/Exact', component: SwapPage },
@@ -8,8 +9,19 @@ export default function Home() {
     { header: 'Exact/Range', component: SwapPage }
   ];
 
-  const [activeView, setActiveView] = useState(navOptions[0].header);
+  const [activeView, setActiveView] = useState(navOptions[0].header)
 
+  const { account, balance, connectWallet } = useMetaMask();
+
+  async function signMessage(message) {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const from = accounts[0];
+    const signature = await ethereum.request({
+      method: 'personal_sign',
+      params: [message, from],
+    });
+    console.log('Signature:', signature);
+  }
 
   return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
@@ -24,6 +36,20 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
+
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <h1>MetaMask Integration with React</h1>
+        {account ? (
+          <div>
+            <p>Connected Account: {account}</p>
+            <p>Balance: {balance} ETH</p>
+            <button onClick={() => signMessage('Hello, world!')}>Sign Message</button>
+          </div>
+        ) : (
+          <button onClick={connectWallet}>Connect MetaMask</button>
+        )}
+      </div>
+
         <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
         <div className="flex flex-col w-full">
           <div className="flex space-x-4 mb-6">
