@@ -1,4 +1,4 @@
-## Contracts
+# Contracts
 Each contracts folder has a contract written in Pint. To get familiar with Pint, here is a guide on some key concepts: https://essential-contributions.github.io/essential-integration/index.html
 https://essential-contributions.github.io/pint/book/the-book-of-pint.html
 
