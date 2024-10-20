@@ -1,5 +1,6 @@
 // web_app/src/app/components/Header.tsx
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
@@ -8,12 +9,12 @@ const Header: React.FC = () => {
         <span className="font-bold">ESSENTIAL</span>
       </div>
       <div className="flex space-x-4">
-        <a href="/" className="flex items-center border-2 border-black px-4 py-2 rounded-full hover:bg-black hover:text-[#FE5C5C] transition-colors duration-300 hover:border-2 hover:border-black">
+        <Link to="/" className="flex items-center border-2 border-black px-4 py-2 rounded-full hover:bg-black hover:text-[#FE5C5C] transition-colors duration-300 hover:border-2 hover:border-black">
           Swap
-        </a>
-        <a href="/pool" className="flex items-center bg-black text-[#FE5C5C] px-4 py-2 rounded-full border-2 border-black hover:bg-transparent hover:text-black transition-colors duration-300">
+        </Link>
+        <Link to="/pool" className="flex items-center bg-black text-[#FE5C5C] px-4 py-2 rounded-full border-2 border-black hover:bg-transparent hover:text-black transition-colors duration-300">
           Pool
-        </a>
+        </Link>
       </div>
     </header>
   );
