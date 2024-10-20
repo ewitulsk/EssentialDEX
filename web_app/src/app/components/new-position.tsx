@@ -5,6 +5,8 @@ import TokenInput from "./token-input";
 
 const NewPosition: React.FC = () => {
 
+  let color = '#A6FF34';
+
   const [sellAmount, setSellAmount] = useState();
   const [selectedSellToken, setSelectedSellToken] = useState("ETH");
   const [buyAmount, setBuyAmount] = useState();
@@ -31,7 +33,7 @@ const NewPosition: React.FC = () => {
           <div className="absolute inset-16 rounded-full border border-white/20"></div>
         </div>
 
-        <Header/>
+        <Header color={color} />
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
           <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
@@ -54,7 +56,7 @@ const NewPosition: React.FC = () => {
 
               <button
                 type="submit"
-                className={`mt-4 p-2 bg-[#FE5C5C] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full`}
+                className={`mt-4 p-2 bg-[${color}] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full`}
                 >
                 REVIEW POSITION
               </button>
