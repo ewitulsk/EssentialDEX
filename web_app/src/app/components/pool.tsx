@@ -7,9 +7,11 @@ import { lp_bal } from '../ess/helpers';
 
 const Pool: React.FC = () => {
 
+  const [lpBalance, setLpBalance] = useState(0);
+
   useEffect(() => {
     const getLpBal = async () => {
-      console.log(await lp_bal(1))
+      setLpBalance(await lp_bal(1))
     }
     getLpBal()
   })
@@ -37,9 +39,39 @@ const Pool: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col w-full items-center justify-center border border-gray-700 rounded-lg">
-            <div className="flex items-center justify-center min-h-[10rem]">
-              <p className="text-gray-400">Your active liquidity positions will appear here.</p>
-            </div>
+            {lpBalance == null || lpBalance == 0 &&
+              <div className="flex items-center justify-center min-h-[10rem]">
+                <p className="text-gray-400">Your active liquidity positions will appear here.</p>
+              </div>
+            }
+            {lpBalance > 0 && (
+              <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl font-bold text-[#A6FF34]">ETH/USDC</span>
+                    <span className="bg-[#A6FF34] text-black text-xs font-semibold px-2 py-1 rounded-full">Active</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="bg-gray-700 p-2 rounded">
+                      <span className="text-gray-400">APR</span>
+                      <p className="font-bold text-[#A6FF34]">5.55%</p>
+                    </div>
+                    <div className="bg-gray-700 p-2 rounded">
+                      <span className="text-gray-400">Fee</span>
+                      <p className="font-bold text-[#A6FF34]">0.3%</p>
+                    </div>
+                    <div className="bg-gray-700 p-2 rounded">
+                      <span className="text-gray-400">Network</span>
+                      <p className="font-bold text-[#A6FF34]">Essential</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 bg-gray-700 p-3 rounded-lg">
+                    <span className="text-gray-400">Current Balance</span>
+                    <p className="text-2xl font-bold text-[#A6FF34]">{lpBalance} LP</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </main>
 
