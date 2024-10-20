@@ -26,7 +26,6 @@ const SwapWrapper: React.FC = () => {
 
         <Header/>
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
-          <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
           <div className="flex flex-col w-full">
             <div className="flex space-x-4 mb-6">
               {navOptions.map((option) => (

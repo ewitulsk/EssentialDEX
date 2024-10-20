@@ -11,11 +11,11 @@ export default function Home() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <SwapWrapper />,
+      element: <Pool />,
     },
     {
       path: "/pool",
-      element: <Pool />,
+      element: <SwapWrapper />,
     }
   ]);
     return (
