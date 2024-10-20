@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react';
 import Header from "./header";
 import { Link } from 'react-router-dom';
 import Circles from "./circles";
-import { lp_bal, ess_bal } from '../ess/helpers';
+import { lp_bal, ess_bal, usdc_bal } from '../ess/helpers';
 
 const Pool: React.FC = () => {
 
   const [lpBalance, setLpBalance] = useState(0);
   const [essBalance, setEssBalance] = useState(0);
+  const [usdcBalance, setUsdcBalance] = useState(0);
 
   useEffect(() => {
     const getBalances = async () => {
       setLpBalance(await lp_bal(1))
       setEssBalance(await ess_bal(1))
+      setUsdcBalance(await usdc_bal(1))
     }
     getBalances()
   }, [])
@@ -67,14 +69,27 @@ const Pool: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full mt-4">
-              <div className="flex flex-col space-y-4">
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl font-bold text-[#A6FF34]">ESS Balance</span>
+            <div className="flex w-full mt-4 space-x-4">
+              <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-1/2">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl font-bold text-[#A6FF34]">ESS Balance</span>
+                  </div>
+                  <div className="mt-4 bg-gray-700 p-3 rounded-lg">
+                    <span className="text-gray-400">Current Balance</span>
+                    <p className="text-2xl font-bold text-[#A6FF34]">{essBalance} ESS</p>
+                  </div>
                 </div>
-                <div className="mt-4 bg-gray-700 p-3 rounded-lg">
-                  <span className="text-gray-400">Current Balance</span>
-                  <p className="text-2xl font-bold text-[#A6FF34]">{essBalance} ESS</p>
+              </div>
+              <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-1/2">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl font-bold text-[#A6FF34]">USDC Balance</span>
+                  </div>
+                  <div className="mt-4 bg-gray-700 p-3 rounded-lg">
+                    <span className="text-gray-400">Current Balance</span>
+                    <p className="text-2xl font-bold text-[#A6FF34]">{usdcBalance} USDC</p>
+                  </div>
                 </div>
               </div>
             </div>
