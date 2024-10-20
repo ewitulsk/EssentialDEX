@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Header from "./header";
 import TokenInput from "./token-input";
 import Snackbar from './snackbar';
+import WaitingSolveModal from './waiting-solve-modal';
 
 import { provide_liquidity } from '../ess/helpers';
 

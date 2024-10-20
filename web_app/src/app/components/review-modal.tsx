@@ -55,7 +55,7 @@ const WaitingSolveModal = ({ showReviewModal, sellAmount, selectedSellToken, buy
               </div>
               <button
                 onClick={doSwap}
-                className="mt-4 p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors w-full"
+                className="mt-4 p-2 bg-[#FE5C5C] border-none rounded text-black cursor-pointer text-base hover:opacity-80 transition-opacity w-full"
               >
                 Confirm Swap
               </button>
