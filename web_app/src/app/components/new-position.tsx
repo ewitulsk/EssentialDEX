@@ -2,12 +2,11 @@
 import React, { useState } from 'react';
 import Header from "./header";
 import TokenInput from "./token-input";
-import CustomSelect from './custom-select';
-import WaitingSolveModal from './waiting-solve-modal';
 import Snackbar from './snackbar';
 
-const NewPosition: React.FC = () => {
+import { provide_liquidity } from '../ess/helpers';
 
+const NewPosition: React.FC = () => {
   let color = '#A6FF34';
 
   const [sellAmount, setSellAmount] = useState();
@@ -22,16 +21,15 @@ const NewPosition: React.FC = () => {
   const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value);
   const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedBuyToken(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setShowModal(true);
     e.preventDefault();
 
-    setShowModal(true);
-    setTimeout(() => {
-      clearInputs()
-      setShowModal(false);
-      setShowSnackbar(true);
-      setTimeout(() => setShowSnackbar(false), 5000);
-    }, 4000);
+    await provide_liquidity(1, Number(buyAmount), Number(sellAmount))
+    clearInputs()
+    setShowModal(false);
+    setShowSnackbar(true);
+    setTimeout(() => setShowSnackbar(false), 5000);
   }
 
   const clearInputs = () => {
@@ -54,6 +52,7 @@ const NewPosition: React.FC = () => {
 
         <Header color={color} />
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
+
           <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
               <h2 className="text-lg font-bold">Deposit amounts</h2>
