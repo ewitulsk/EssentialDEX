@@ -1,7 +1,7 @@
 'use client'
 import SwapPage from "./components/swap-page";
 import { useState } from "react";
-import useMetaMask from "./components/meta-mask";
+import Header from "./components/header";
 export default function Home() {
   const navOptions = [
     { header: 'Exact/Exact', component: SwapPage },
@@ -11,12 +11,10 @@ export default function Home() {
 
   const [activeView, setActiveView] = useState(navOptions[0].header)
 
-  const { account, balance, connectWallet, getPublicKey, signMessage } = useMetaMask();
-
   return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
-      {/* Concentric Circles Background */}
-      <div className="absolute inset-0">
+
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 rounded-full border border-white/10"></div>
         <div className="absolute inset-4 rounded-full border border-white/10"></div>
         <div className="absolute inset-8 rounded-full border border-white/10"></div>
@@ -25,21 +23,8 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
+      <Header />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
-
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <h1>MetaMask Integration with React</h1>
-        {account ? (
-          <div>
-            <p>Connected Account: {account}</p>
-            <p>Balance: {balance} ETH</p>
-            <button onClick={() => signMessage('Hello, world!')}>Sign Message</button>
-            <button onClick={() => getPublicKey()}>Public Key</button>
-          </div>
-        ) : (
-          <button onClick={connectWallet}>Connect MetaMask</button>
-        )}
-      </div>
 
         <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
         <div className="flex flex-col w-full">
