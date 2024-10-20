@@ -5,8 +5,9 @@ import { createHash } from 'crypto';
 
 const LOCAL_SERVER = "https://bigbangblock.builders"
 
-const CONTRACT = "F70C575DAADA3C524861963D4E1B3A482025CA6625CD949B523C0CF8ED938F33" 
-const MINT_USDC_PRED = "2D89A918E325405A5BDA34B45D9E445BFE77759C2911753CEE294B73BCF213D4"
+const CONTRACT = "5D2283018463D8E97747BA20CE4EB053D11B38E4EF708F1EE2A7267D74832389" 
+const MINT_USDC_PRED = "5F3A37CDA561A8B40870DB8758711FD668E2FD9551453056B88031E2607EB463"
+const MINT_ESS_PRED = "AC34EA89B4BF9ADBE1A4BD7DECE8570359AD594379C926F13E5753C8AFC381F9"
 
 
 // const ADD_LIQUIDITY_PREDICATE = "BD77574D5A00D8717E0726F33EB6922B5F0189D7AC4EED7BB336B8F9A483F776"
@@ -90,10 +91,6 @@ function sleep(ms: number) {
 
 test('test mint usdc', async () => {
     let essential = new EssentialClient(LOCAL_SERVER);
-    // const data = await essential.queryState(CONTRACT, ["0000000000000000"]);
-    // console.log(data)
-    // let total_supply_lp = parseInt(data[0])
-    // console.log("Total supply LP: " + total_supply_lp)
 
     let addLiquidityPredicateAddress = {
         contract: CONTRACT,
@@ -104,28 +101,24 @@ test('test mint usdc', async () => {
     let wallet = 1 //Wallet 0
     let mint_amount = 503;
 
-    // const before_amount = await essential.queryState(CONTRACT, ["0000000000000005"+"0000000000000000"]);
-    // console.log(before_amount);
+    const before_amount = await essential.queryState(CONTRACT, ["0000000000000005"+"0000000000000001"]);
+    
+    let to_add = 0;
 
-    // let to_add = 0;
+    if(before_amount != null){
+        to_add = before_amount[0]
+    }
 
-    // if(before_amount != null){
-    //     to_add = before_amount[0]
-    // }
-
-    // let stateMut = {
-    //     key: [5, wallet],
-    //     value: [mint_amount]
-    // } as Mutation
+    console.log(to_add);
 
     let stateMut = {
         key: [5, wallet],
-        value: [mint_amount]
+        value: [mint_amount+to_add]
     } as Mutation
 
     let solutionData = {
         predicate_to_solve: addLiquidityPredicateAddress,
-        decision_variables: [[wallet, mint_amount]],
+        decision_variables: [[wallet], [mint_amount]],
         transient_data: [],
         state_mutations: [stateMut]
     } as SolutionData
@@ -143,7 +136,59 @@ test('test mint usdc', async () => {
     await sleep(8000)
 
     const after_amount = await essential.queryState(CONTRACT, ["0000000000000005"+"0000000000000001"])
-    expect(after_amount).toEqual([mint_amount])
+    console.log("After: "+after_amount)
+    expect(after_amount).toEqual([mint_amount+to_add])
+}, 1000000);
+
+test('test mint ess', async () => {
+    let essential = new EssentialClient(LOCAL_SERVER);
+
+    let addLiquidityPredicateAddress = {
+        contract: CONTRACT,
+        predicate:  MINT_USDC_PRED
+    } as PredicateAddress
+
+
+    let wallet = 1 //Wallet 0
+    let mint_amount = 503;
+
+    const before_amount = await essential.queryState(CONTRACT, ["0000000000000005"+"0000000000000001"]);
+    
+    let to_add = 0;
+
+    if(before_amount != null){
+        to_add = before_amount[0]
+    }
+
+    console.log(to_add);
+
+    let stateMut = {
+        key: [5, wallet],
+        value: [mint_amount+to_add]
+    } as Mutation
+
+    let solutionData = {
+        predicate_to_solve: addLiquidityPredicateAddress,
+        decision_variables: [[wallet], [mint_amount]],
+        transient_data: [],
+        state_mutations: [stateMut]
+    } as SolutionData
+
+    console.log("Solution Data:")
+    console.log(solutionData)
+
+    console.log("State Mutations:")
+    console.log(solutionData.state_mutations)
+
+    let solution = new Solution([solutionData])
+    let tx_hash = await essential.submitSolution(solution);
+    console.log(tx_hash)
+
+    await sleep(8000)
+
+    const after_amount = await essential.queryState(CONTRACT, ["0000000000000005"+"0000000000000001"])
+    console.log("After: "+after_amount)
+    expect(after_amount).toEqual([mint_amount+to_add])
 }, 1000000);
 
 test("", () => {

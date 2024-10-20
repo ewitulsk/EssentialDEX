@@ -27,7 +27,7 @@ predicate MintTokenUsdc {
     
     state usdc_balance = mut storage::usdc_balances[to];
 
-    constraint (usdc_balance == nil && usdc_balance' > 0) || usdc_balance' - usdc_balance == amount;
+    constraint (usdc_balance == nil && usdc_balance' == amount) || usdc_balance' - usdc_balance == amount;
 
 }
 
