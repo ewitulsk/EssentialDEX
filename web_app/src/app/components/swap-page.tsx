@@ -90,10 +90,7 @@ const SwapPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-muted text-gray-400">Swap</h2>
-        </div>
+      <form onSubmit={handleSubmit} className="Lbg-gray-800 p-5 rounded-lg flex flex-col">
         <div>
           {/* Sell Section */}
           <TokenInput
@@ -118,10 +115,10 @@ const SwapPage = () => {
 
           <button
             type="submit"
-            className={`mt-4 p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors w-full ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`mt-4 p-2 bg-[#FE5C5C] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken}
           >
-            Review Swap
+            REVIEW SWAP
           </button>
         </div>
       </form>

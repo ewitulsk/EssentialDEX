@@ -21,8 +21,8 @@ const Pool: React.FC = () => {
           <div className="flex justify-between w-full items-center mb-4">
             <h1 className="text-2xl font-bold">Positions</h1>
             <div className="flex space-x-4">
-              <Link to={'/new_position'} className="bg-[#FE5C5C] flex h-full items-center justify-between gap-[1rem] rounded-xl px-[0.74rem] py-2 text-black hover:opacity-80 transition-opacity duration-300">
-                + New position
+              <Link to={'/new_position'} className="bg-[#FE5C5C] flex h-full font-semibold text-sm items-center justify-between gap-[1rem] rounded-xl px-[0.74rem] py-2 text-black hover:opacity-80 transition-opacity duration-300">
+                + NEW POSITION
               </Link>
             </div>
           </div>

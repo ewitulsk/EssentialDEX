@@ -5,10 +5,10 @@ import Header from "./header";
 
 const SwapWrapper: React.FC = () => {
   const navOptions = [
-    { header: 'Swap', component: SwapPage },
-    { header: 'Limit', component: SwapPage },
-    { header: 'Send', component: SwapPage },
-    { header: 'Buy', component: SwapPage }
+    { header: 'SWAP', component: SwapPage },
+    { header: 'LIMIT', component: SwapPage },
+    { header: 'SEND', component: SwapPage },
+    { header: 'BUY', component: SwapPage }
   ];
 
   const [activeView, setActiveView] = useState(navOptions[0].header)
@@ -34,9 +34,9 @@ const SwapWrapper: React.FC = () => {
                   key={`${option.header}-button`}
                   className={`px-4 py-2 rounded-full flex items-center justify-center transition-all duration-300 w-24 ${
                     activeView === option.header
-                      ? 'bg-[#FE5C5C] text-black hover:opacity-80'
-                      : 'bg-gray-800 text-white hover:bg-gray-700'
-                  }`}
+                      ? 'bg-[#FE5C5C] text-black hover:opacity-80 transition-opacity'
+                      : 'bg-gray-800 text-white hover:bg-[#FE5C5C] hover:text-black hover:opacity-80 transition-opacity'
+                  } font-semibold text-sm leading-5`}
                 >
                   {option.header}
                 </button>
