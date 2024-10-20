@@ -19,12 +19,7 @@ const TokenInput = ({
   onTokenChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
 }) => {
-  const tokenOptions = [
-    { value: 'ethereum', label: 'ETH', icon: TokenETH },
-    { value: 'usd', label: 'USDC', icon: TokenUSDC },
-  ];
 
-  const selectedOption = tokenOptions.find(option => option.value === selectedToken);
 
   return (
     <div className="flex items-center gap-2">
@@ -43,9 +38,8 @@ const TokenInput = ({
           />
           <CustomSelect
             isDisabled={disabled}
-            value={selectedOption}
+            value={selectedToken}
             onChange={(option) => onTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
-            options={tokenOptions}
           />
         </div>
       </div>

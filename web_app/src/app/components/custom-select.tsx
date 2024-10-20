@@ -1,12 +1,20 @@
+import { TokenETH, TokenUSDC } from '@web3icons/react';
 import Select from 'react-select'
 
-const CustomSelect = ({isDisabled, value, onChange, options}) => {
+const CustomSelect = ({isDisabled, value, onChange}) => {
+  const tokenOptions = [
+    { value: 'ethereum', label: 'ETH', icon: TokenETH },
+    { value: 'usd', label: 'USDC', icon: TokenUSDC },
+  ];
+
+  const selectedOption = tokenOptions.find(option => option.value === value);
+
   return (
     <Select
       isDisabled={isDisabled}
-      value={value}
+      value={selectedOption}
       onChange={onChange}
-      options={options}
+      options={tokenOptions}
       placeholder="Select "
       classNamePrefix="react-select"
       styles={{
