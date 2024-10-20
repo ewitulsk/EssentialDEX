@@ -90,36 +90,40 @@ const SwapPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        {/* Sell Section */}
-        <TokenInput
-          label="Sell"
-          amount={sellAmount}
-          onAmountChange={handleSellChange}
-          selectedToken={selectedSellToken}
-          onTokenChange={handleSellTokenChange}
-        />
+      <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-muted text-gray-400">Swap</h2>
+        </div>
+        <div>
+          {/* Sell Section */}
+          <TokenInput
+            label="Sell"
+            amount={sellAmount}
+            onAmountChange={handleSellChange}
+            selectedToken={selectedSellToken}
+            onTokenChange={handleSellTokenChange}
+          />
 
-        {/* Arrow Icon */}
-        <div className="text-center text-2xl cursor-pointer" onClick={handleSwap}>↓</div>
+          {/* Arrow Icon */}
+          <div className="text-xl text-muted text-gray-600 cursor-pointer pl-2 py-2" onClick={handleSwap}>↓</div>
 
+          {/* Buy Section */}
+          <TokenInput
+            label="Buy"
+            amount={buyAmount}
+            onAmountChange={handleBuyChange}
+            selectedToken={selectedBuyToken}
+            onTokenChange={handleBuyTokenChange}
+          />
 
-        {/* Buy Section */}
-        <TokenInput
-          label="Buy"
-          amount={buyAmount}
-          onAmountChange={handleBuyChange}
-          selectedToken={selectedBuyToken}
-          onTokenChange={handleBuyTokenChange}
-        />
-
-        <button
-          type="submit"
-          className={`p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken}
-        >
-          Review
-        </button>
+          <button
+            type="submit"
+            className={`mt-4 p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors w-full ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken}
+          >
+            Review Swap
+          </button>
+        </div>
       </form>
 
       <ReviewModal showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap} setShowReviewModal={setShowReviewModal}/>
