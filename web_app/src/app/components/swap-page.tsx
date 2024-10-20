@@ -32,6 +32,7 @@ const SwapPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
 
+  const disable_review = !sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSellAmount(e.target.value)
@@ -96,7 +97,8 @@ const SwapPage = () => {
 
         <button
           type="submit"
-          className="p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors"
+          className={`p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors ${disable_review ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={disable_review}
         >
           Review
         </button>
