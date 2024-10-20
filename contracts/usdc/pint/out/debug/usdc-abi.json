@@ -1,0 +1,61 @@
+{
+  "predicates": [
+    {
+      "name": "::Mint",
+      "vars": [],
+      "pub_vars": [
+        {
+          "name": "::to",
+          "ty": "B256"
+        },
+        {
+          "name": "::amount",
+          "ty": "Int"
+        }
+      ]
+    },
+    {
+      "name": "::Burn",
+      "vars": [],
+      "pub_vars": [
+        {
+          "name": "::from",
+          "ty": "B256"
+        },
+        {
+          "name": "::amount",
+          "ty": "Int"
+        }
+      ]
+    },
+    {
+      "name": "::Transfer",
+      "vars": [],
+      "pub_vars": [
+        {
+          "name": "::from",
+          "ty": "B256"
+        },
+        {
+          "name": "::to",
+          "ty": "B256"
+        },
+        {
+          "name": "::amount",
+          "ty": "Int"
+        }
+      ]
+    }
+  ],
+  "storage": [
+    {
+      "name": "balances",
+      "ty": {
+        "Map": {
+          "ty_from": "B256",
+          "ty_to": "Int"
+        }
+      }
+    }
+  ]
+}

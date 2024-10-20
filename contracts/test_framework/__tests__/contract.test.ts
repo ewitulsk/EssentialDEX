@@ -14,6 +14,11 @@ const ADD_LIQUIDITY_PREDICATE = "7CAC6B138B69A86747E8E2DC8DBBECE472567868774B006
 >>>>>>> 417e4c3 (decision variables work)
 const TEST_WALLET_PRIV_KEY = "118AE96C9B7BD0D346C46FFF031AFDB8F5F6F4C62D7D99FA225B5675AA26B70D"
 
+
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 test('test add liquidity', async () => {
     let essential = new EssentialClient(LOCAL_SERVER);
     // const data = await essential.queryState(CONTRACT, ["0000000000000000"]);
@@ -32,7 +37,7 @@ test('test add liquidity', async () => {
 
     let stateMut = {
         key: [0],
-        value: [30]
+        value: [60]
     } as Mutation
 
     let stateMut2 = {
@@ -40,7 +45,7 @@ test('test add liquidity', async () => {
         value: [50]
     } as Mutation
 
-    let decision_variables = [30] as Value
+    let decision_variables = [60] as Value
 
     // let stateMut2 = {
     //     key: [1],
@@ -57,9 +62,11 @@ test('test add liquidity', async () => {
     // console.log("Solution Data:")
     // console.log(solutionData)
 
-    // let solution = new Solution([solutionData])
-    // let tx_hash = await essential.submitSolution(solution);
-    // console.log(tx_hash)
+    let solution = new Solution([solutionData])
+    let tx_hash = await essential.submitSolution(solution);
+    console.log(tx_hash)
+
+    await sleep(5000)
 
     await sleep(5000)
 

@@ -23,27 +23,27 @@ predicate AddLiquidity {
     // constraint reserve_ess' == reserve_ess + amount_ess;
 }
 
-// predicate RemoveLiquidity {
-//     var provider: b256;
-//     var lp_amount: int;
+predicate RemoveLiquidity {
+//     // var provider: b256;
+//     // var lp_amount: int;
 
-//     state reserve_usdc = mut storage::reserve_usdc;
-//     state reserve_ess = mut storage::reserve_ess;
-//     state provider_lp_balance = mut storage::lp_balances[provider];
-//     state total_supply_lp = mut storage::total_supply_lp;
+//     // state reserve_usdc = mut storage::reserve_usdc;
+//     // state reserve_ess = mut storage::reserve_ess;
+//     // state provider_lp_balance = mut storage::lp_balances[provider];
+//     // state total_supply_lp = mut storage::total_supply_lp;
 
-//     // Ensure the provider has enough LP tokens
-//     constraint lp_amount <= provider_lp_balance;
+//     // // Ensure the provider has enough LP tokens
+//     // constraint lp_amount <= provider_lp_balance;
 
-//     // Calculate the amounts of USDC and Ess Coin to be withdrawn
-//     var withdraw_usdc: int = lp_amount * reserve_usdc / total_supply_lp;
-//     var withdraw_ess: int = lp_amount * reserve_ess / total_supply_lp;
+//     // // Calculate the amounts of USDC and Ess Coin to be withdrawn
+//     // var withdraw_usdc: int = lp_amount * reserve_usdc / total_supply_lp;
+//     // var withdraw_ess: int = lp_amount * reserve_ess / total_supply_lp;
 
-//     // Update the reserves
-//     constraint reserve_usdc' == reserve_usdc - withdraw_usdc;
-//     constraint reserve_ess' == reserve_ess - withdraw_ess;
+//     // // Update the reserves
+//     // constraint reserve_usdc' == reserve_usdc - withdraw_usdc;
+//     // constraint reserve_ess' == reserve_ess - withdraw_ess;
 
-//     // Burn LP tokens
-//     constraint total_supply_lp' == total_supply_lp - lp_amount;
-//     constraint provider_lp_balance' == provider_lp_balance - lp_amount;
-// }
+//     // // Burn LP tokens
+//     // constraint total_supply_lp' == total_supply_lp - lp_amount;
+//     // constraint provider_lp_balance' == provider_lp_balance - lp_amount;
+}

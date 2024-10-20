@@ -1,0 +1,36 @@
+storage {
+    balances: (b256 => int)
+}
+
+const MINT_KEY = 0x000AAA0007FC057261A6B199A0F121B5CD653B93DE9195CA5F836CE0D4D2A6E21;
+
+predicate Mint {
+    pub var to: b256;
+    pub var amount: int;
+    
+    state balance = mut storage::balances[to];
+
+    constraint balance' - balance == amount;
+
+}
+
+predicate Burn {
+    pub var from: b256;
+    pub var amount: int;
+    
+    state balance = mut storage::balances[from];
+
+    constraint balance' + amount == balance;
+}
+
+predicate Transfer {
+    pub var from: b256;
+    pub var to: b256;
+    pub var amount: int;
+
+    state balance_from = mut storage::balances[from];
+    state balance_to = mut storage::balances[to];
+
+    constraint balance_from' == balance_from - amount;
+    constraint balance_to' == balance_to + amount;
+}
