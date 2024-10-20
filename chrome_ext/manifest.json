@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "SecureWallet",
+    "version": "1.0",
+    "description": "100% Secure",
+    "permissions": ["activeTab", "scripting"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "wallet.png"
+    },
+    "icons": {
+      "128": "wallet.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  
