@@ -13,38 +13,38 @@ storage {
     reserve_usdc: int,  // Reserves for USDC
     reserve_ess: int,   // Reserves for Ess Coin
     total_supply_lp: int,  // Total LP tokens issued
-    lp_balances: (b256 => int),  // LP token balances per user
-    nonces: (b256 => int),  // Nonces for auth
-    usdc_balances: (b256 => int),  // USDC balances per user
-    ess_balances: (b256 => int),  // Ess Coin balances per user
+    lp_balances: (int => int),  // LP token balances per user
+    nonces: (int => int),  // Nonces for auth
+    usdc_balances: (int => int),  // USDC balances per user
+    ess_balances: (int => int),  // Ess Coin balances per user
 }
 
 //union LiquidityAuth = Signed(Secp256k1Signature) | Predicate(PredicateAddress);
 
 predicate MintTokenUsdc {
-    pub var to: b256;
-    pub var amount: int;
+    var to: int;
+    var amount: int;
     
     state usdc_balance = mut storage::usdc_balances[to];
 
-    constraint usdc_balance' - usdc_balance == amount;
+    constraint (usdc_balance == nil && usdc_balance' > 0) || usdc_balance' - usdc_balance == amount;
 
 }
 
 predicate MintTokenEss {
-    pub var to: b256;
-    pub var amount: int;
+    var to: int;
+    var amount: int;
     
     state ess_balance = mut storage::ess_balances[to];
 
-    constraint ess_balance' - ess_balance == amount;
+    constraint (ess_balance == nil && ess_balance' > 0) || ess_balance' - ess_balance == amount;
     
 }
 
 predicate AddLiquidity {
-    pub var provider: b256;
-    pub var amount_usdc: int;
-    pub var amount_ess: int;
+    var provider: int;
+    var amount_usdc: int;
+    var amount_ess: int;
 
    // var auth: LiquidityAuth;
     //const MINIMUM_LIQUIDITY: int = 1000; 
@@ -88,8 +88,8 @@ var mint_lp = cond {
 }
 
 predicate RemoveLiquidity {
-    pub var provider: b256;
-    pub var lp_amount: int;
+    var provider: int;
+    var lp_amount: int;
 
 //    var auth: LiquidityAuth;
 
@@ -123,10 +123,10 @@ predicate RemoveLiquidity {
 }
 
 predicate Swap {
-    pub var user: b256;
-    pub var amount_in: int;
-    pub var token_in: bool;  // true for USDC, false for Ess
-    pub var min_amount_out: int;
+    var user: int;
+    var amount_in: int;
+    var token_in: bool;  // true for USDC, false for Ess
+    var min_amount_out: int;
 
     state reserve_usdc = mut storage::reserve_usdc;
     state reserve_ess = mut storage::reserve_ess;
@@ -150,10 +150,10 @@ predicate Swap {
 }
 
 predicate Transfer {
-    pub var from: b256;
-    pub var to: b256;
-    pub var amount: int;
-    pub var token: bool;  // true for USDC, false for Ess
+    var from: int;
+    var to: int;
+    var amount: int;
+    var token: bool;  // true for USDC, false for Ess
 
     state from_usdc_balance = mut storage::usdc_balances[from];
     state from_ess_balance = mut storage::ess_balances[from];
