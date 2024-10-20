@@ -5,8 +5,8 @@ import { createHash } from 'crypto';
 
 const LOCAL_SERVER = "https://bigbangblock.builders"
 
-const CONTRACT = "11389D77D464D305FEED85FCD728C2F10D7FC39DF9EE8AF13C5D39A6164CA38D" 
-const ADD_LIQUIDITY_PREDICATE = "076E55D50548B85FF7B3FA182F9183F9545FA6B25A4C112172C2DC0D45A6F894"
+const CONTRACT = "EC55D953909B85A156853A8C954C3F89A2931BBE8DD7214DC7FA14C0BAE32AB7" 
+const ADD_LIQUIDITY_PREDICATE = "BEF4CBC4A67AA9B6633AA457CE39B0695DB0F592EDD4E6F86868A6F8E8EBA3C2"
 const TEST_WALLET_PRIV_KEY = "118AE96C9B7BD0D346C46FFF031AFDB8F5F6F4C62D7D99FA225B5675AA26B70D"
 
 test('test add liquidity', async () => {
@@ -26,25 +26,27 @@ test('test add liquidity', async () => {
     // const i64Value: bigint = pubkeyToI64(pubkey);
     // console.log(pubkey)
     let stateMut = {
-        key: [0,1],
-        value: [10, 20]
+        key: [0],
+        value: [10]
     } as Mutation
 
-    // let stateMut2 = {
-    //     key: [1],
-    //     value: [20]
-    // } as Mutation
+    let stateMut2 = {
+        key: [1],
+        value: [20]
+    } as Mutation
 
     let solutionData = {
         predicate_to_solve: addLiquidityPredicateAddress,
-        decision_variables: [],
+        decision_variables: [[10, 20]],
         transient_data: [],
-        state_mutations: [stateMut]
+        state_mutations: [stateMut, stateMut2]
     } as SolutionData
 
     let solution = new Solution([solutionData])
     let tx_hash = await essential.submitSolution(solution);
     console.log(tx_hash)
+
+    await sleep(5000)
 
     const new_data = await essential.queryState(CONTRACT, ["0000000000000000"]);
     console.log(new_data)
@@ -53,7 +55,7 @@ test('test add liquidity', async () => {
     // // let new_total_supply_lp = parseInt(new_data[0])
     // console.log("New total supply LP: " + new_total_supply_lp)
     // expect(new_total_supply_lp).toEqual(15) 
-});
+}, 10000);
 
 test("", () => {
     console.log("test");
@@ -80,5 +82,9 @@ function pubkeyToI64(pubkey: Buffer): bigint {
     }
 
     return i64Value;
+}
+
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
