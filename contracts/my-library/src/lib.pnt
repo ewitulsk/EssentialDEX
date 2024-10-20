@@ -25,3 +25,22 @@ predicate Sqrt {
     constraint result * result <= y;
     constraint (result + 1) * (result + 1) > y;
 }
+
+// Helper macro for using Min
+macro @min($a, $b) {
+    var result: int;
+    predicate MinInstance = Min();
+    constraint MinInstance::a == $a;
+    constraint MinInstance::b == $b;
+    constraint MinInstance::result == result;
+    result
+}
+
+// Helper macro for using Sqrt
+macro @sqrt($y) {
+    var result: int;
+    predicate SqrtInstance = Sqrt();
+    constraint SqrtInstance::y == $y;
+    constraint SqrtInstance::result == result;
+    result
+}
