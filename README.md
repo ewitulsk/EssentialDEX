@@ -12,9 +12,9 @@ Decentralized Exchange (DEX): Our DEX allows users to:
 
 ### Key Features:
 
-    Token Management: Since there were no tokens available on Essential Blockchain when we started, we wrote contracts to mint, burn, and transfer tokens.
-    Smart Wallet Integration: We experimented with building a smart wallet tailored for the Essential Blockchain, ensuring seamless interaction between contracts and users.
-    Next.js & React Frontend: The frontend is built using Next.js and React, providing a modern and responsive user experience, following best practices seen in other swap protocols.
+- Token Management: Since there were no tokens available on Essential Blockchain when we started, we wrote contracts to mint, burn, and transfer tokens.
+- Smart Wallet Integration: We experimented with building a smart wallet tailored for the Essential Blockchain, ensuring seamless interaction between contracts and users.
+- Next.js & React Frontend: The frontend is built using Next.js and React, providing a modern and responsive user experience, following best practices seen in other swap protocols.
 
 ### Development Timeline
 
@@ -29,8 +29,8 @@ Future Enhancements
 
 We have a number of exciting plans for the future, including:
 
-    Dollar-Cost Averaging (DCA) Tool: This feature will allow users to automatically purchase assets on a scheduled basis, leveraging time-based constraints in Pint contracts.
-    Expanded Features and Token Support: Continued exploration of the Essential Blockchain’s unique features to unlock new innovations in decentralized finance.
+- Dollar-Cost Averaging (DCA) Tool: This feature will allow users to automatically purchase assets on a scheduled basis, leveraging time-based constraints in Pint contracts.
+- Expanded Features and Token Support: Continued exploration of the Essential Blockchain’s unique features to unlock new innovations in decentralized finance.
 
 ## Getting Started
 
