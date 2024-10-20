@@ -31,7 +31,7 @@ const SwapPage = () => {
   const [sellAmount, setSellAmount] = useState();
   const [selectedSellToken, setSelectedSellToken] = useState('ethereum');
   const [buyAmount, setBuyAmount] = useState();
-  const [selectedBuyToken, setSelectedBuyToken] = useState('');
+  const [selectedBuyToken, setSelectedBuyToken] = useState('usd');
   const [showModal, setShowModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
