@@ -28,7 +28,7 @@ const Pool: React.FC = () => {
 
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
           <div className="flex justify-between w-full items-center mb-4">
-            <h1 className="text-2xl font-bold">Positions</h1>
+            <h1 className="text-2xl font-bold text-gray-400">Positions</h1>
             <div className="flex space-x-4">
               <Link to={'/new_position'} className={ `bg-[#A6FF34] flex h-full font-semibold text-sm items-center justify-between gap-[1rem] rounded-xl px-[0.74rem] py-2 text-black hover:opacity-80 transition-opacity duration-300`}>
                 + NEW POSITION
@@ -69,11 +69,14 @@ const Pool: React.FC = () => {
                 </div>
               </div>
             )}
+
+            <h1 className="text-2xl font-bold text-gray-400">Wallet Balance</h1>
+
             <div className="flex w-full mt-4 space-x-4">
               <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-1/2">
                 <div className="flex flex-col space-y-4">
                   <div className="flex items-center space-x-3">
-                    <span className="text-2xl font-bold text-[#A6FF34]">ESS Balance</span>
+                    <span className="text-2xl font-bold text-[#A6FF34]">ETH Balance</span>
                   </div>
                   <div className="mt-4 bg-gray-700 p-3 rounded-lg">
                     <span className="text-gray-400">Current Balance</span>
