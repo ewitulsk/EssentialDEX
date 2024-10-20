@@ -11,17 +11,7 @@ export default function Home() {
 
   const [activeView, setActiveView] = useState(navOptions[0].header)
 
-  const { account, balance, connectWallet, getPublicKey } = useMetaMask();
-
-  async function signMessage(message) {
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    const from = accounts[0];
-    const signature = await ethereum.request({
-      method: 'personal_sign',
-      params: [message, from],
-    });
-    console.log('Signature:', signature);
-  }
+  const { account, balance, connectWallet, getPublicKey, signMessage } = useMetaMask();
 
   return (
     <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">

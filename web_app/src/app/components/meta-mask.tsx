@@ -38,7 +38,6 @@ const useMetaMask = () => {
 
 
     try {
-      const message = 'Get public key';  // Example message
       const publicKey = await window.ethereum.request({
         method: 'eth_getEncryptionPublicKey',
         params: [account],
@@ -53,6 +52,16 @@ const useMetaMask = () => {
     }
   };
 
+  const signMessage = async (message) => {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const from = accounts[0];
+    const signature = await ethereum.request({
+      method: 'personal_sign',
+      params: [message, from],
+    });
+    console.log('Signature:', signature);
+  }
+
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts) => {
@@ -65,7 +74,7 @@ const useMetaMask = () => {
     }
   }, []);
 
-  return { account, balance, publicKey, connectWallet, getPublicKey };
+  return { account, balance, publicKey, connectWallet, getPublicKey, signMessage };
 };
 
 export default useMetaMask;
