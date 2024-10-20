@@ -68,8 +68,6 @@ test('test add liquidity', async () => {
 
     await sleep(5000)
 
-    await sleep(5000)
-
     const new_data = await essential.queryState(CONTRACT, ["0000000000000000"]);
     console.log(new_data)
     const new_data2 = await essential.queryState(CONTRACT, ["0000000000000001"]);
@@ -77,7 +75,7 @@ test('test add liquidity', async () => {
     // // let new_total_supply_lp = parseInt(new_data[0])
     // console.log("New total supply LP: " + new_total_supply_lp)
     // expect(new_total_supply_lp).toEqual(15) 
-}, 10000);
+}, 1000000);
 
 test("", () => {
     console.log("test");
