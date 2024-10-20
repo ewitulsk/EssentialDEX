@@ -3,29 +3,24 @@ import React, { useEffect, useState } from 'react';
 import Header from "./header";
 import { Link } from 'react-router-dom';
 import Circles from "./circles";
-import { lp_bal } from '../ess/helpers';
+import { lp_bal, ess_bal } from '../ess/helpers';
 
 const Pool: React.FC = () => {
 
   const [lpBalance, setLpBalance] = useState(0);
+  const [essBalance, setEssBalance] = useState(0);
 
   useEffect(() => {
-    const getLpBal = async () => {
+    const getBalances = async () => {
       setLpBalance(await lp_bal(1))
+      setEssBalance(await ess_bal(1))
     }
-    getLpBal()
-  })
+    getBalances()
+  }, [])
+
   return (
     <>
       <div className="relative min-h-screen grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 rounded-full border border-white/10"></div>
-          <div className="absolute inset-4 rounded-full border border-white/10"></div>
-          <div className="absolute inset-8 rounded-full border border-white/10"></div>
-          <div className="absolute inset-12 rounded-full border border-white/10"></div>
-          <div className="absolute inset-16 rounded-full border border-white/20"></div>
-        </div>
-
         <Circles/>
         <Header color='#A6FF34'/>
 
@@ -38,7 +33,7 @@ const Pool: React.FC = () => {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col w-full items-center justify-center border border-gray-700 rounded-lg">
+          <div className="flex flex-col w-full items-center justify-center rounded-lg">
             {lpBalance == null || lpBalance == 0 &&
               <div className="flex items-center justify-center min-h-[10rem]">
                 <p className="text-gray-400">Your active liquidity positions will appear here.</p>
@@ -72,6 +67,17 @@ const Pool: React.FC = () => {
                 </div>
               </div>
             )}
+            <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full mt-4">
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl font-bold text-[#A6FF34]">ESS Balance</span>
+                </div>
+                <div className="mt-4 bg-gray-700 p-3 rounded-lg">
+                  <span className="text-gray-400">Current Balance</span>
+                  <p className="text-2xl font-bold text-[#A6FF34]">{essBalance} ESS</p>
+                </div>
+              </div>
+            </div>
           </div>
         </main>
 
