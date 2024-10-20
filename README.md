@@ -36,6 +36,6 @@ We have a number of exciting plans for the future, including:
 
 To run the project locally:
 
-Clone the repo.
-Install dependencies using npm install.
-Start the local development server with npm run dev.
+- Clone the repo.
+- Install dependencies using ```npm install```
+- Start the local development server with ```npm run dev```
