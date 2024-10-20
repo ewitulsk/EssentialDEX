@@ -64,7 +64,7 @@ export class EssentialClient {
                 }
             }
         )
-        let txt = await(req).json()
+        let txt = await(req).text()
         return txt
     }
 
