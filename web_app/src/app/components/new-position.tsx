@@ -18,9 +18,17 @@ const NewPosition: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
 
-  const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value);
+  const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSellAmount(e.target.value);
+    setBuyAmount(Number(e.target.value) * 2648.98)
+
+  }
   const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSellToken(e.target.value);
-  const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value);
+  const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBuyAmount(e.target.value);
+    setSellAmount(Number(e.target.value) * 0.00038)
+
+  }
   const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedBuyToken(e.target.value);
 
   const navigate = useNavigate();
@@ -64,8 +72,6 @@ const NewPosition: React.FC = () => {
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
               <h2 className="text-lg font-bold">Deposit amounts</h2>
 
-
-              <h3 className="text-sm font-medium text-gray-400">Deposit amounts</h3>
               <TokenInput
                 amount={sellAmount || ''}
                 onAmountChange={handleSellChange}
