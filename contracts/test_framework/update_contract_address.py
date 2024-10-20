@@ -8,7 +8,7 @@ print("Initial working directory:", current_path)
 result = None
 
 # Change the current working directory to the specified path
-os.chdir(f"{current_path}/pint")
+os.chdir(f"{current_path}/../pint")
 
 # Execute the command "pint build"
 try:
@@ -28,7 +28,7 @@ output = """
 """
 
 # Relative path to the .env file
-env_file_path = "../test_framework/.env"
+env_file_path = "./.env"
 
 # Regex pattern to match contract addresses and predicates
 contract_pattern = r"contracts\s+([A-F0-9]+)"
