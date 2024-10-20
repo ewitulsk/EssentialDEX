@@ -6,13 +6,12 @@ type Secp256k1PublicKey = { b256, int };
 
 // Helper macro for minimum function
 macro @min($a, $b) {
-    (
-        if $a <= $b {
-            $a;
-        } else {
-            $b;
+    if $a <= $b {
+        $a
+    } || {
+        $b;
         }
-    )
+    
 }
 
 // Helper macro for square root function using Babylonian method

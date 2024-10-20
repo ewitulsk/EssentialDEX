@@ -61,13 +61,12 @@ predicate AddLiquidity {
     var lp_usdc = (amount_usdc * total_supply_lp) / (reserve_usdc + amount_usdc);
     var lp_ess = (amount_ess * total_supply_lp) / (reserve_ess + amount_ess);
 
+    var x = amount_usdc / (amount_usdc + reserve_usdc) * (total_supply_lp + amount_usdc);
+    var y = amount_ess / (amount_ess + reserve_ess) * (total_supply_lp + amount_ess);
 
 var mint_lp = cond {
-    total_supply_lp == 0 => @sqrt(amount_usdc * amount_ess) //- MINIMUM_LIQUIDITY,
-    else => @min(
-        amount_usdc / (amount_usdc + reserve_usdc) * (total_supply_lp + amount_usdc);
-        amount_ess / (amount_ess + reserve_ess) * (total_supply_lp + amount_ess)
-    )
+    total_supply_lp * total_supply_lp == 0 => (amount_usdc * amount_ess), //- MINIMUM_LIQUIDITY,
+    else => x < y ? x : y        
 };
 
     // Use @delta for balance changes
