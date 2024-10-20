@@ -56,7 +56,7 @@ const NewPosition: React.FC = () => {
           type="submit"
           className="p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors"
         >
-          Get Started
+          Review
         </button>
       </form>
     </div>
