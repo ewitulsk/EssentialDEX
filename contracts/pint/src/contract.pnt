@@ -78,8 +78,8 @@ predicate AddLiquidity {
     // constraint (reserve_usdc' - reserve_usdc) == amount_usdc;
     // constraint (reserve_ess' - reserve_ess) == amount_ess;
     // constraint @delta(provider_lp_balance) == mint_lp;
-    // constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
-    // constraint @delta(provider_ess_balance) == 0 - amount_ess;
+    constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
+    constraint @delta(provider_ess_balance) == 0 - amount_ess;
 
 //     // Increment the nonce
 //     constraint @safe_increment(nonce);
@@ -137,20 +137,20 @@ predicate Swap {
     state user_usdc_balance = mut storage::usdc_balances[user];
     state user_ess_balance = mut storage::ess_balances[user];
 
-    // Calculate the amount out based on the constant product formula
-    var amount_out = cond {
-        token_in => (amount_in * reserve_ess) / (reserve_usdc + amount_in),
-        else => (amount_in * reserve_usdc) / (reserve_ess + amount_in),
-    };
+    // // Calculate the amount out based on the constant product formula
+    // var amount_out = cond {
+    //     token_in => (amount_in * reserve_ess) / (reserve_usdc + amount_in),
+    //     else => (amount_in * reserve_usdc) / (reserve_ess + amount_in),
+    // };
 
-    // Ensure the minimum amount out is met
-    constraint amount_out >= min_amount_out;
+    // // Ensure the minimum amount out is met
+    // constraint amount_out >= min_amount_out;
 
-    // Update reserves and balances
-    constraint reserve_usdc' == cond { token_in => reserve_usdc + amount_in, else => reserve_usdc - amount_out };
-    constraint reserve_ess' == cond { token_in => reserve_ess - amount_out, else => reserve_ess + amount_in };
-    constraint user_usdc_balance' == cond { token_in => user_usdc_balance - amount_in, else => user_usdc_balance + amount_out };
-    constraint user_ess_balance' == cond { token_in => user_ess_balance + amount_out, else => user_ess_balance - amount_in };
+    // // Update reserves and balances
+    // constraint reserve_usdc' == cond { token_in => reserve_usdc + amount_in, else => reserve_usdc - amount_out };
+    // constraint reserve_ess' == cond { token_in => reserve_ess - amount_out, else => reserve_ess + amount_in };
+    // constraint user_usdc_balance' == cond { token_in => user_usdc_balance - amount_in, else => user_usdc_balance + amount_out };
+    // constraint user_ess_balance' == cond { token_in => user_ess_balance + amount_out, else => user_ess_balance - amount_in };
 }
 
 predicate Transfer {
