@@ -92,7 +92,7 @@ const NewPosition: React.FC = () => {
           </div>
         </main>
 
-        <WaitingSolveModal showModal={showModal} header='Processing Your Swap' />
+        <WaitingSolveModal showModal={showModal} header='Depositing your liquidity' />
         <Snackbar showSnackbar={showSnackbar} message={'Deposit successful'}/>
 
         {/* Footer */}
