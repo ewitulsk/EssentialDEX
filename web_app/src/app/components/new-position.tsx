@@ -40,24 +40,9 @@ const NewPosition: React.FC = () => {
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
               <h2 className="text-lg font-bold">Deposit amounts</h2>
 
-              <h3 className="text-sm font-medium text-gray-400">Select pair</h3>
-              <div className="flex justify-between">
-                <CustomSelect
-                  value={selectedSellToken}
-                  onChange={(option) => handleSellTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
-                  isDisabled={false}
-                />
-                <CustomSelect
-                  value={selectedBuyToken}
-                  onChange={(option) => handleBuyTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
-                  isDisabled={false}
-                />
-              </div>
-
               {selectedSellToken && selectedBuyToken && (
                 <>
                   <h3 className="text-sm font-medium text-gray-400">Deposit amounts</h3>
-
                   <TokenInput
                     amount={sellAmount || ''}
                     onAmountChange={handleSellChange}
