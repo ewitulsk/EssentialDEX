@@ -6,6 +6,7 @@ import Snackbar from './snackbar';
 import WaitingSolveModal from './waiting-solve-modal';
 
 import { provide_liquidity } from '../ess/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const NewPosition: React.FC = () => {
   let color = '#A6FF34';
@@ -22,6 +23,8 @@ const NewPosition: React.FC = () => {
   const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value);
   const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedBuyToken(e.target.value);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setShowModal(true);
     e.preventDefault();
@@ -31,6 +34,9 @@ const NewPosition: React.FC = () => {
     setShowModal(false);
     setShowSnackbar(true);
     setTimeout(() => setShowSnackbar(false), 5000);
+
+    // Redirect to pool page using React Router
+    navigate('/pool');
   }
 
   const clearInputs = () => {
