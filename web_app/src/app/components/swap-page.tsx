@@ -64,10 +64,18 @@ const SwapPage = () => {
     setShowReviewModal(false)
     setShowModal(true);
     setTimeout(() => {
+      clearInputs()
       setShowModal(false);
       setShowSnackbar(true);
       setTimeout(() => setShowSnackbar(false), 5000);
     }, 4000);
+  }
+
+  const clearInputs = () => {
+    setSellAmount('');
+    setBuyAmount('');
+    setSelectedSellToken('ethereum');
+    setSelectedBuyToken('');
   }
 
   const handleSwap = () => {
@@ -114,7 +122,7 @@ const SwapPage = () => {
         </button>
       </form>
 
-      <ReviewModal showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap}/>
+      <ReviewModal showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap} setShowReviewModal={setShowReviewModal}/>
       <WaitingSolveModal showModal={showModal} />
       <Snackbar showSnackbar={showSnackbar} />
     </div>
