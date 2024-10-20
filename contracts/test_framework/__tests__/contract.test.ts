@@ -5,13 +5,8 @@ import { createHash } from 'crypto';
 
 const LOCAL_SERVER = "https://bigbangblock.builders"
 
-<<<<<<< HEAD
-const CONTRACT = "EC55D953909B85A156853A8C954C3F89A2931BBE8DD7214DC7FA14C0BAE32AB7" 
-const ADD_LIQUIDITY_PREDICATE = "BEF4CBC4A67AA9B6633AA457CE39B0695DB0F592EDD4E6F86868A6F8E8EBA3C2"
-=======
-const CONTRACT = "F7BD71739448FE6644F9BAC5A717E22222C73CB98259DC7AE94A0B4D020C0BEF" 
-const ADD_LIQUIDITY_PREDICATE = "7CAC6B138B69A86747E8E2DC8DBBECE472567868774B006C44152AAE735B4B4D"
->>>>>>> 417e4c3 (decision variables work)
+const CONTRACT = "46181618F3D1D0864485AD5C50FC242593CCB6088D24E4566F9231155DCFA06E" 
+const ADD_LIQUIDITY_PREDICATE = "BD77574D5A00D8717E0726F33EB6922B5F0189D7AC4EED7BB336B8F9A483F776"
 const TEST_WALLET_PRIV_KEY = "118AE96C9B7BD0D346C46FFF031AFDB8F5F6F4C62D7D99FA225B5675AA26B70D"
 
 
@@ -37,41 +32,54 @@ test('test add liquidity', async () => {
 
     let stateMut = {
         key: [0],
-        value: [60]
+        value: [1]
     } as Mutation
 
     let stateMut2 = {
         key: [1],
-        value: [50]
+        value: [90]
     } as Mutation
 
-    let decision_variables = [60] as Value
+    let stateMut3 = {
+        key: [2],
+        value: [5]
+    } as Mutation
 
-    // let stateMut2 = {
-    //     key: [1],
-    //     value: [20]
-    // } as Mutation
+    let stateMut4 = {
+        key: [3, 4],
+        value: [60]
+    } as Mutation
 
     let solutionData = {
         predicate_to_solve: addLiquidityPredicateAddress,
-        decision_variables: [decision_variables],
+        decision_variables: [[4]],
         transient_data: [],
-        state_mutations: [stateMut, stateMut2]
+        state_mutations: [stateMut, stateMut2, stateMut3, stateMut4]
     } as SolutionData
 
-    // console.log("Solution Data:")
-    // console.log(solutionData)
+    console.log("Solution Data:")
+    console.log(solutionData)
+
+    console.log("State Mutations:")
+    console.log(solutionData.state_mutations)
 
     let solution = new Solution([solutionData])
     let tx_hash = await essential.submitSolution(solution);
     console.log(tx_hash)
 
-    await sleep(5000)
+    await sleep(8000)
 
     const new_data = await essential.queryState(CONTRACT, ["0000000000000000"]);
     console.log(new_data)
     const new_data2 = await essential.queryState(CONTRACT, ["0000000000000001"]);
     console.log(new_data2)
+    const new_data3 = await essential.queryState(CONTRACT, ["0000000000000002"]);
+    console.log(new_data3)
+
+    const new_data4 = await essential.queryState(CONTRACT, ["0000000000000003"+"0000000000000004"]);
+    console.log(new_data4)
+
+
     // // let new_total_supply_lp = parseInt(new_data[0])
     // console.log("New total supply LP: " + new_total_supply_lp)
     // expect(new_total_supply_lp).toEqual(15) 

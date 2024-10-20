@@ -1,7 +1,7 @@
 
 export type Word = number; //i64 (maybe u64?)
 export type Key = Word[];
-export type Value = Word[]; 
+export type Value = Word[] | any; 
 
 export type Hash = String;  
 export type ContentAddress = Hash; 

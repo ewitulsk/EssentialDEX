@@ -54,11 +54,12 @@ export class EssentialClient {
     }
 
     async submitSolution(solution: Solution){
+        let post_body = solution.serialize()
         let url = this.baseUrl+"/submit-solution"
         let req = await fetch(url,
             {
                 method: "POST",
-                body: solution.serialize(),
+                body: post_body,
                 headers: {
                     "Content-Type": "application/json",
                 }
@@ -70,10 +71,11 @@ export class EssentialClient {
 
     async queryState(contentAddress: ContentAddress, hexKey: String[]){
         let toBeQueried = this.baseUrl+"/query-state/"+contentAddress+"/"+hexKey
-        // console.log(toBeQueried)
+        console.log(toBeQueried)
         let req = await fetch(toBeQueried)
         // console.log(req.status)
         return await(req).json()
+        return await(req).text()
     }
 }
 
