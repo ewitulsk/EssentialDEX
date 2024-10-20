@@ -4,9 +4,10 @@ import { useState } from "react";
 import Header from "./components/header";
 export default function Home() {
   const navOptions = [
-    { header: 'Exact/Exact', component: SwapPage },
-    { header: 'Exact/Market', component: SwapPage },
-    { header: 'Exact/Range', component: SwapPage }
+    { header: 'Swap', component: SwapPage },
+    { header: 'Limit', component: SwapPage },
+    { header: 'Send', component: SwapPage },
+    { header: 'Buy', component: SwapPage }
   ];
 
   const [activeView, setActiveView] = useState(navOptions[0].header)
@@ -22,8 +23,8 @@ export default function Home() {
         <div className="absolute inset-16 rounded-full border border-white/20"></div>
       </div>
 
-      {/* Main Content */}
       <Header />
+
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10">
 
         <h1 className="text-2xl font-bold mb-4">PINT SWAP</h1>
@@ -35,7 +36,7 @@ export default function Home() {
           </div>
           <div className="swap-pages">
             {navOptions.map((option) => (
-              activeView === option.header && <option.component key={option.header} header={option.header} />
+              activeView === option.header && <option.component key={option.header} />
             ))}
           </div>
         </div>

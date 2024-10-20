@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import TokenInput from './token-input';
-const SwapPage = ({ header }: { header: string }) => {
+const SwapPage = () => {
   const [sellAmount, setSellAmount] = useState('');
   const [selectedSellToken, setSelectedSellToken] = useState('ETH');
   const [buyAmount, setBuyAmount] = useState('');
@@ -29,7 +29,6 @@ const SwapPage = ({ header }: { header: string }) => {
 
   return (
     <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
-      <h2>{header}</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         {/* Sell Section */}
         <TokenInput
