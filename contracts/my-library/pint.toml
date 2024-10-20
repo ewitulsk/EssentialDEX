@@ -1,0 +1,9 @@
+[package]
+name = "my-library"
+kind = "library"
+
+[dependencies]
+# Library dependencies go here.
+
+[contract-dependencies]
+# Contract dependencies go here.

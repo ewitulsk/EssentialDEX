@@ -1,0 +1,27 @@
+// Math library with min and sqrt functions
+
+// Minimum function
+predicate Min {
+    pub var x: int;
+    pub var y: int;
+    pub var result: int;
+
+    constraint result <= x && result <= y;
+    constraint result == x || result == y;
+}
+
+// Square root function using Babylonian method (same as Uniswap)
+predicate Sqrt {
+    pub var y: int;
+    pub var result: int;
+
+    constraint y >= 0;
+    constraint result >= 0;
+    
+    // Babylonian method constraints
+    var x: int;
+    constraint (y > 3 && x == y / 2 + 1) || (y <= 3 && y != 0 && x == 1) || (y == 0 && x == 0);
+    
+    constraint result * result <= y;
+    constraint (result + 1) * (result + 1) > y;
+}
