@@ -90,7 +90,7 @@ const SwapPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
-      <form onSubmit={handleSubmit} className="Lbg-gray-800 p-5 rounded-lg flex flex-col">
+      <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col">
         <div>
           {/* Sell Section */}
           <TokenInput

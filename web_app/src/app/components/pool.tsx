@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Header from "./header";
 import { Link } from 'react-router-dom';
-
+import Circles from "./circles";
 const Pool: React.FC = () => {
   return (
     <>
@@ -15,6 +15,7 @@ const Pool: React.FC = () => {
           <div className="absolute inset-16 rounded-full border border-white/20"></div>
         </div>
 
+        <Circles/>
         <Header/>
 
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
