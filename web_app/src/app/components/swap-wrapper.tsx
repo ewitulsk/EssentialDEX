@@ -29,7 +29,17 @@ const SwapWrapper: React.FC = () => {
           <div className="flex flex-col w-full">
             <div className="flex space-x-4 mb-6">
               {navOptions.map((option) => (
-                <button onClick={() => setActiveView(option.header)} key={`${option.header}-button`} className={`px-4 py-2 bg-gray-800 text-white rounded-full ${activeView === option.header ? 'bg-purple-700' : ''}`}>{option.header}</button>
+                <button
+                  onClick={() => setActiveView(option.header)}
+                  key={`${option.header}-button`}
+                  className={`px-4 py-2 rounded-full flex items-center justify-center transition-all duration-300 w-24 ${
+                    activeView === option.header
+                      ? 'bg-[#FE5C5C] text-black hover:opacity-80'
+                      : 'bg-gray-800 text-white hover:bg-gray-700'
+                  }`}
+                >
+                  {option.header}
+                </button>
               ))}
             </div>
             <div className="swap-pages">
