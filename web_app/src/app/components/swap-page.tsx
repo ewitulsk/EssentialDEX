@@ -5,6 +5,7 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 import WaitingSolveModal from './waiting-solve-modal';
 import Snackbar from './snackbar';
+import ReviewModal from './review-modal';
 
 const SwapPage = () => {
   const fetchConversionRate = async (sellToken: string, buyToken: string, setAmount: (amount: string) => void) => {
@@ -27,14 +28,13 @@ const SwapPage = () => {
     []
   );
 
-  const [sellAmount, setSellAmount] = useState('');
+  const [sellAmount, setSellAmount] = useState();
   const [selectedSellToken, setSelectedSellToken] = useState('ethereum');
-  const [buyAmount, setBuyAmount] = useState('');
-  const [selectedBuyToken, setSelectedBuyToken] = useState();
+  const [buyAmount, setBuyAmount] = useState();
+  const [selectedBuyToken, setSelectedBuyToken] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
-
-  const disable_review = !(!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken)
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSellAmount(e.target.value)
@@ -53,15 +53,22 @@ const SwapPage = () => {
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setShowReviewModal(true)
+  };
+
+  const doSwap = (e) => {
+    e.preventDefault();
+
+    setShowReviewModal(false)
     setShowModal(true);
     setTimeout(() => {
       setShowModal(false);
       setShowSnackbar(true);
       setTimeout(() => setShowSnackbar(false), 5000);
     }, 4000);
-
-    e.preventDefault();
-  };
+  }
 
   const handleSwap = () => {
     const tempSellAmount = sellAmount;
@@ -88,6 +95,7 @@ const SwapPage = () => {
         {/* Arrow Icon */}
         <div className="text-center text-2xl cursor-pointer" onClick={handleSwap}>↓</div>
 
+
         {/* Buy Section */}
         <TokenInput
           label="Buy"
@@ -99,13 +107,14 @@ const SwapPage = () => {
 
         <button
           type="submit"
-          className={`p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors ${disable_review ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={disable_review}
+          className={`p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken}
         >
           Review
         </button>
       </form>
 
+      <ReviewModal showReviewModal={showReviewModal} sellAmount={sellAmount} selectedSellToken={selectedSellToken} buyAmount={buyAmount} selectedBuyToken={selectedBuyToken} doSwap={doSwap}/>
       <WaitingSolveModal showModal={showModal} />
       <Snackbar showSnackbar={showSnackbar} />
     </div>

@@ -11,12 +11,14 @@ const TokenInput = ({
   onAmountChange,
   selectedToken,
   onTokenChange,
+  disabled = false
 }: {
   label: string | undefined;
   amount: string;
   onAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedToken: string;
   onTokenChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  disabled?: boolean;
 }) => {
   const tokenOptions = [
     { value: 'ethereum', label: 'ETH', icon: TokenETH },
@@ -38,8 +40,10 @@ const TokenInput = ({
             onChange={onAmountChange}
             placeholder="0"
             className="flex-2 p-2 rounded bg-gray-800 border border-gray-700 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            disabled={disabled}
           />
           <Select
+            isDisabled={disabled}
             value={selectedOption}
             onChange={(option) => onTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
             options={tokenOptions}
