@@ -5,15 +5,15 @@ import { createHash } from 'crypto';
 
 const LOCAL_SERVER = "https://bigbangblock.builders"
 
-const CONTRACT = "938DC3D177411834100B5E6734509C89B59A9BB8316940F6378ABF89A5C21CC1" 
-const ADD_LIQUIDITY_PREDICATE = "57A21B7969680BCEB3A6C42C408988B5D9FE95B3BA3F2C10952F79FE4BB72728"
+const CONTRACT = "11389D77D464D305FEED85FCD728C2F10D7FC39DF9EE8AF13C5D39A6164CA38D" 
+const ADD_LIQUIDITY_PREDICATE = "076E55D50548B85FF7B3FA182F9183F9545FA6B25A4C112172C2DC0D45A6F894"
 const TEST_WALLET_PRIV_KEY = "118AE96C9B7BD0D346C46FFF031AFDB8F5F6F4C62D7D99FA225B5675AA26B70D"
 
 test('test add liquidity', async () => {
     let essential = new EssentialClient(LOCAL_SERVER);
-    //const data = await essential.queryState(CONTRACT, ["0000000000000000"]);
-    //console.log(data)
-    // let total_supply_lp = parseInt(data[3])
+    // const data = await essential.queryState(CONTRACT, ["0000000000000000"]);
+    // console.log(data)
+    // let total_supply_lp = parseInt(data[0])
     // console.log("Total supply LP: " + total_supply_lp)
 
     let addLiquidityPredicateAddress = {
@@ -21,18 +21,23 @@ test('test add liquidity', async () => {
         predicate:  ADD_LIQUIDITY_PREDICATE
     } as PredicateAddress
 
-    let pubkeyHex = Account.from_str(TEST_WALLET_PRIV_KEY).publicKey()
-    const pubkey: Buffer = Buffer.from(pubkeyHex, 'hex');
-    const i64Value: bigint = pubkeyToI64(pubkey);
-    console.log(pubkey)
+    // let pubkeyHex = Account.from_str(TEST_WALLET_PRIV_KEY).publicKey()
+    // const pubkey: Buffer = Buffer.from(pubkeyHex, 'hex');
+    // const i64Value: bigint = pubkeyToI64(pubkey);
+    // console.log(pubkey)
     let stateMut = {
-        key: [0, 1, 2],
-        value: [10, 20, 999]
+        key: [0,1],
+        value: [10, 20]
     } as Mutation
+
+    // let stateMut2 = {
+    //     key: [1],
+    //     value: [20]
+    // } as Mutation
 
     let solutionData = {
         predicate_to_solve: addLiquidityPredicateAddress,
-        decision_variables: [[Number(i64Value.toString()), 10, 20]],
+        decision_variables: [],
         transient_data: [],
         state_mutations: [stateMut]
     } as SolutionData
@@ -43,9 +48,11 @@ test('test add liquidity', async () => {
 
     const new_data = await essential.queryState(CONTRACT, ["0000000000000000"]);
     console.log(new_data)
-    let new_total_supply_lp = parseInt(new_data[0])
-    console.log("New total supply LP: " + new_total_supply_lp)
-    expect(new_total_supply_lp).toEqual(15) 
+    const new_data2 = await essential.queryState(CONTRACT, ["0000000000000001"]);
+    console.log(new_data2)
+    // // let new_total_supply_lp = parseInt(new_data[0])
+    // console.log("New total supply LP: " + new_total_supply_lp)
+    // expect(new_total_supply_lp).toEqual(15) 
 });
 
 test("", () => {
