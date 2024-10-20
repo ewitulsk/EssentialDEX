@@ -11,7 +11,7 @@ export default function Home() {
 
   const [activeView, setActiveView] = useState(navOptions[0].header)
 
-  const { account, balance, connectWallet } = useMetaMask();
+  const { account, balance, connectWallet, getPublicKey } = useMetaMask();
 
   async function signMessage(message) {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -44,6 +44,7 @@ export default function Home() {
             <p>Connected Account: {account}</p>
             <p>Balance: {balance} ETH</p>
             <button onClick={() => signMessage('Hello, world!')}>Sign Message</button>
+            <button onClick={() => getPublicKey()}>Public Key</button>
           </div>
         ) : (
           <button onClick={connectWallet}>Connect MetaMask</button>

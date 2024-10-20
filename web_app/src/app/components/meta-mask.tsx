@@ -6,6 +6,7 @@ const useMetaMask = () => {
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [publicKey, setPublicKey] = useState(null);
 
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -29,21 +30,42 @@ const useMetaMask = () => {
     }
   };
 
+  const getPublicKey = async () => {
+    if (!account || !provider) {
+      console.error('Connect to MetaMask first.');
+      return;
+    }
+
+
+    try {
+      const message = 'Get public key';  // Example message
+      const publicKey = await window.ethereum.request({
+        method: 'eth_getEncryptionPublicKey',
+        params: [account],
+     })
+
+      // const messageHash = ethers.hashMessage(message);
+      // const recoveredPublicKey = ethers.recoverPublicKey(messageHash, signature);
+      setPublicKey(publicKey);
+      console.log('Public Key:', publicKey);
+    } catch (error) {
+      console.error('Error retrieving public key:', error);
+    }
+  };
+
   useEffect(() => {
     if (window.ethereum) {
-      // Update account on change
       window.ethereum.on('accountsChanged', (accounts) => {
         setAccount(accounts[0] || null);
       });
 
-      // Reload on network change
       window.ethereum.on('chainChanged', () => {
         window.location.reload();
       });
     }
   }, []);
 
-  return { account, balance, connectWallet };
+  return { account, balance, publicKey, connectWallet, getPublicKey };
 };
 
 export default useMetaMask;
