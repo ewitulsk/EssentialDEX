@@ -31,3 +31,6 @@ We have a number of exciting plans for the future, including:
 
 - Dollar-Cost Averaging (DCA) Tool: This feature will allow users to automatically purchase assets on a scheduled basis, leveraging time-based constraints in Pint contracts.
 - Expanded Features and Token Support: Continued exploration of the Essential Blockchain’s unique features to unlock new innovations in decentralized finance.
+
+### For Further Details...
+See the README files within the ```web_app``` and ```contracts``` directories
