@@ -38,7 +38,9 @@ const SwapPage = () => {
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSellAmount(e.target.value)
-    debouncedFetchConversionRate(selectedSellToken, selectedBuyToken, setBuyAmount)
+    // debouncedFetchConversionRate(selectedSellToken, selectedBuyToken, setBuyAmount)
+    setBuyAmount(Number(e.target.value) * 2648.98)
+
   }
   const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSellToken(e.target.value);
@@ -46,7 +48,8 @@ const SwapPage = () => {
 
   const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBuyAmount(e.target.value)
-    debouncedFetchConversionRate(selectedBuyToken, selectedSellToken, setSellAmount)
+    // debouncedFetchConversionRate(selectedBuyToken, selectedSellToken, setSellAmount)
+    setSellAmount(Number(e.target.value) * 0.00038)
   }
   const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBuyToken(e.target.value);
