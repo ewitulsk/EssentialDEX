@@ -1,16 +1,50 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import TokenInput from './token-input';
+import axios from 'axios';
+import { debounce } from 'lodash';
+
 const SwapPage = () => {
+
+  const fetchConversionRate = async (sellToken: string, buyToken: string, setAmount: (amount: string) => void) => {
+    if (!sellToken || !buyToken || sellToken !== buyToken) return;
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${sellToken}&vs_currencies=${buyToken}`
+      );
+      setAmount(response.data[sellToken][buyToken])
+    } catch (err) {
+      console.log('error', err)
+    }
+  };
+
+  const debouncedFetchConversionRate = useCallback(
+    debounce((sellToken: string, buyToken: string, setAmount: (amount: string) => void) => {
+      fetchConversionRate(sellToken, buyToken, setAmount);
+    }, 300),
+    []
+  );
+
   const [sellAmount, setSellAmount] = useState('');
-  const [selectedSellToken, setSelectedSellToken] = useState('ETH');
+  const [selectedSellToken, setSelectedSellToken] = useState('ethereum');
   const [buyAmount, setBuyAmount] = useState('');
   const [selectedBuyToken, setSelectedBuyToken] = useState();
 
-  const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value);
-  const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSellToken(e.target.value);
-  const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value);
-  const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedBuyToken(e.target.value);
+  const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSellAmount(e.target.value)
+    debouncedFetchConversionRate(selectedSellToken, selectedBuyToken, setBuyAmount)
+  }
+  const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSellToken(e.target.value);
+  }
+
+  const handleBuyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBuyAmount(e.target.value)
+    debouncedFetchConversionRate(selectedBuyToken, selectedSellToken, setSellAmount)
+  }
+  const handleBuyTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBuyToken(e.target.value);
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

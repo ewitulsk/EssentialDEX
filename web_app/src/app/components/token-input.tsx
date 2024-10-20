@@ -19,9 +19,8 @@ const TokenInput = ({
   onTokenChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   const tokenOptions = [
-    { value: 'ETH', label: 'ETH', icon: TokenETH },
-    { value: 'BTC', label: 'BTC', icon: TokenBTC },
-    { value: 'USDC', label: 'USDC', icon: TokenUSDC },
+    { value: 'ethereum', label: 'ETH', icon: TokenETH },
+    { value: 'usd', label: 'USDC', icon: TokenUSDC },
   ];
 
   const selectedOption = tokenOptions.find(option => option.value === selectedToken);
