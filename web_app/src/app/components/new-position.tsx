@@ -33,33 +33,33 @@ const NewPosition: React.FC = () => {
 
         <Header/>
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
-        <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <h2 className="text-lg font-bold">Deposit amounts</h2>
-        {/* Sell Section */}
-        <TokenInput
-          amount={sellAmount}
-          onAmountChange={handleSellChange}
-          selectedToken={selectedSellToken}
-          onTokenChange={handleSellTokenChange}
-        />
+          <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
+            <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
+              <h2 className="text-lg font-bold">Deposit amounts</h2>
+              {/* Sell Section */}
+              <TokenInput
+                amount={sellAmount}
+                onAmountChange={handleSellChange}
+                selectedToken={selectedSellToken}
+                onTokenChange={handleSellTokenChange}
+              />
 
-        {/* Buy Section */}
-        <TokenInput
-          amount={buyAmount}
-          onAmountChange={handleBuyChange}
-          selectedToken={selectedBuyToken}
-          onTokenChange={handleBuyTokenChange}
-        />
+              {/* Buy Section */}
+              <TokenInput
+                amount={buyAmount}
+                onAmountChange={handleBuyChange}
+                selectedToken={selectedBuyToken}
+                onTokenChange={handleBuyTokenChange}
+              />
 
-        <button
-          type="submit"
-          className="p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors"
-        >
-          Review
-        </button>
-      </form>
-    </div>
+              <button
+                type="submit"
+                className="p-2 bg-purple-700 border-none rounded text-white cursor-pointer text-base hover:bg-purple-600 transition-colors"
+              >
+                Review
+              </button>
+            </form>
+          </div>
         </main>
 
         {/* Footer */}
