@@ -77,4 +77,24 @@ const useMetaMask = () => {
   return { account, balance, publicKey, connectWallet, getPublicKey, signMessage };
 };
 
+const MetaMask = () => {
+  const { account, balance, connectWallet, getPublicKey, signMessage } = useMetaMask();
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>MetaMask Integration with React</h1>
+    {account ? (
+      <div>
+        <p>Connected Account: {account}</p>
+        <p>Balance: {balance} ETH</p>
+        <button onClick={() => signMessage('Hello, world!')}>Sign Message</button>
+        <button onClick={() => getPublicKey()}>Public Key</button>
+      </div>
+    ) : (
+      <button onClick={connectWallet}>Connect MetaMask</button>
+    )}
+  </div>
+  )
+}
+
 export default useMetaMask;
