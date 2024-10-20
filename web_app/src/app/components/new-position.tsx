@@ -2,15 +2,16 @@
 import React, { useState } from 'react';
 import Header from "./header";
 import TokenInput from "./token-input";
+import CustomSelect from './custom-select';
 
 const NewPosition: React.FC = () => {
 
   let color = '#A6FF34';
 
   const [sellAmount, setSellAmount] = useState();
-  const [selectedSellToken, setSelectedSellToken] = useState("ETH");
+  const [selectedSellToken, setSelectedSellToken] = useState("ethereum");
   const [buyAmount, setBuyAmount] = useState();
-  const [selectedBuyToken, setSelectedBuyToken] = useState("USDC");
+  const [selectedBuyToken, setSelectedBuyToken] = useState("usd");
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value);
   const handleSellTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSellToken(e.target.value);
@@ -38,21 +39,41 @@ const NewPosition: React.FC = () => {
           <div className="max-w-md mx-auto p-5 bg-gray-900 rounded-lg text-white">
             <form onSubmit={handleSubmit} className="bg-gray-800 p-5 rounded-lg flex flex-col gap-5">
               <h2 className="text-lg font-bold">Deposit amounts</h2>
-              {/* Sell Section */}
-              <TokenInput
-                amount={sellAmount}
-                onAmountChange={handleSellChange}
-                selectedToken={selectedSellToken}
-                onTokenChange={handleSellTokenChange}
-              />
 
-              {/* Buy Section */}
-              <TokenInput
-                amount={buyAmount}
-                onAmountChange={handleBuyChange}
-                selectedToken={selectedBuyToken}
-                onTokenChange={handleBuyTokenChange}
-              />
+              <h3 className="text-sm font-medium text-gray-400">Select pair</h3>
+              <div className="flex justify-between">
+                <CustomSelect
+                  value={selectedSellToken}
+                  onChange={(option) => handleSellTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
+                  isDisabled={false}
+                />
+                <CustomSelect
+                  value={selectedBuyToken}
+                  onChange={(option) => handleBuyTokenChange({ target: { value: option?.value || '' } } as React.ChangeEvent<HTMLSelectElement>)}
+                  isDisabled={false}
+                />
+              </div>
+
+              {selectedSellToken && selectedBuyToken && (
+                <>
+                  <h3 className="text-sm font-medium text-gray-400">Deposit amounts</h3>
+
+                  <TokenInput
+                    amount={sellAmount || ''}
+                    onAmountChange={handleSellChange}
+                    selectedToken={selectedSellToken}
+                    onTokenChange={handleSellTokenChange}
+                  />
+
+                  {/* Buy Section */}
+                  <TokenInput
+                    amount={buyAmount || ''}
+                    onAmountChange={handleBuyChange}
+                    selectedToken={selectedBuyToken}
+                    onTokenChange={handleBuyTokenChange}
+                  />
+                </>
+              )}
 
               <button
                 type="submit"
