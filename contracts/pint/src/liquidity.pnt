@@ -15,6 +15,8 @@ storage {
     total_supply_lp: int,  // Total LP tokens issued
     lp_balances: (b256 => int),  // LP token balances per user
     nonces: (b256 => int),  // Nonces for auth
+    usdc_balances: (b256 => int),  // USDC balances per user
+    ess_balances: (b256 => int),  // Ess Coin balances per user
 }
 
 union LiquidityAuth = Signed(Secp256k1Signature) | Predicate(PredicateAddress);
@@ -31,6 +33,8 @@ predicate AddLiquidity {
     state provider_lp_balance = mut storage::lp_balances[provider];
     state total_supply_lp = mut storage::total_supply_lp;
     state nonce = mut storage::nonces[provider];
+    state provider_usdc_balance = mut storage::usdc_balances[provider];
+    state provider_ess_balance = mut storage::ess_balances[provider];
 
     // Calculate liquidity to mint
     const MINIMUM_LIQUIDITY: int = 1000;  
@@ -46,6 +50,8 @@ predicate AddLiquidity {
     constraint @delta(reserve_ess) == amount_ess;
     constraint @delta(total_supply_lp) == mint_lp;
     constraint @delta(provider_lp_balance) == mint_lp;
+    constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
+    constraint @delta(provider_ess_balance) == 0 - amount_ess;
 
     // Increment the nonce
     constraint @safe_increment(nonce);
