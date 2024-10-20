@@ -21,6 +21,7 @@
     "@types/secp256k1": "^4.0.6",
     "axios": "^1.7.7",
     "axios-http2-adapter": "^1.0.1",
+    "dotenv": "^16.4.5",
     "fetch-h2": "^3.0.2",
     "http2-wrapper": "^2.2.1",
     "node-fetch": "^3.3.2",

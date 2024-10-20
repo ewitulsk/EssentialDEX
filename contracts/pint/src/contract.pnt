@@ -37,14 +37,18 @@ predicate MintTokenEss {
     
     state ess_balance = mut storage::ess_balances[to];
 
-    constraint (ess_balance == nil && ess_balance' > 0) || ess_balance' - ess_balance == amount;
-    
+    constraint (ess_balance == nil && ess_balance' == amount) || ess_balance' - ess_balance == amount;
 }
 
 predicate AddLiquidity {
     var provider: int;
     var amount_usdc: int;
     var amount_ess: int;
+    var lp_usdc: int;
+    var lp_ess: int;
+    var x: int;
+    var y: int;
+    var mint_lp: int;
 
    // var auth: LiquidityAuth;
     //const MINIMUM_LIQUIDITY: int = 1000; 
@@ -58,27 +62,27 @@ predicate AddLiquidity {
     state provider_ess_balance = mut storage::ess_balances[provider];
 
     // Calculate liquidity to mint
-    var lp_usdc = (amount_usdc * total_supply_lp) / (reserve_usdc + amount_usdc);
-    var lp_ess = (amount_ess * total_supply_lp) / (reserve_ess + amount_ess);
+    
+    constraint lp_usdc == (amount_usdc * (reserve_usdc' + reserve_ess')) / (reserve_usdc' + amount_usdc);
+    constraint lp_ess == (amount_ess * (reserve_usdc' + reserve_ess')) / (reserve_ess' + amount_ess);
 
-    var x = amount_usdc / (amount_usdc + reserve_usdc) * (total_supply_lp + amount_usdc);
-    var y = amount_ess / (amount_ess + reserve_ess) * (total_supply_lp + amount_ess);
+    constraint x == (amount_usdc / (amount_usdc + reserve_usdc')) * ((reserve_usdc' + reserve_ess') + amount_usdc);
+    constraint y == (amount_ess / (amount_ess + reserve_ess')) * ((reserve_usdc' + reserve_ess') + amount_ess);
 
-var mint_lp = cond {
-    total_supply_lp * total_supply_lp == 0 => (amount_usdc * amount_ess), //- MINIMUM_LIQUIDITY,
-    else => x < y ? x : y        
-};
+    constraint mint_lp == cond {
+        reserve_usdc == nil => (amount_usdc * amount_ess) / 10, //- MINIMUM_LIQUIDITY, //TODO:
+        else => x < y ? x : y
+    };        
 
-    // Use @delta for balance changes
-    constraint @delta(reserve_usdc) == amount_usdc;
-    constraint @delta(reserve_ess) == amount_ess;
-    constraint @delta(total_supply_lp) == mint_lp;
-    constraint @delta(provider_lp_balance) == mint_lp;
-    constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
-    constraint @delta(provider_ess_balance) == 0 - amount_ess;
+//     // Use @delta for balance changes
+    // constraint (reserve_usdc' - reserve_usdc) == amount_usdc;
+    // constraint (reserve_ess' - reserve_ess) == amount_ess;
+    // constraint @delta(provider_lp_balance) == mint_lp;
+    // constraint @delta(provider_usdc_balance) == 0 - amount_usdc;
+    // constraint @delta(provider_ess_balance) == 0 - amount_ess;
 
-    // Increment the nonce
-    constraint @safe_increment(nonce);
+//     // Increment the nonce
+//     constraint @safe_increment(nonce);
 
     // Check authorization
 //    constraint match auth {
@@ -113,7 +117,7 @@ predicate RemoveLiquidity {
     constraint @delta(provider_lp_balance) == 0 - lp_amount;
 
     // Increment the nonce
-    constraint @safe_increment(nonce);
+    // constraint @safe_increment(nonce);
 
     // Check authorization
   //  constraint match auth {
