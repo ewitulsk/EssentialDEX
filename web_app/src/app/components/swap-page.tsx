@@ -115,8 +115,7 @@ const SwapPage = () => {
 
           <button
             type="submit"
-            className={`mt-4 p-2 bg-[#FE5C5C] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full ${!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken}
+            className={`mt-4 p-2 bg-[#FE5C5C] font-semibold text-sm border-none rounded-xl text-black cursor-pointer text-base hover:opacity-80 transition-opacity duration-300 w-full`}
           >
             REVIEW SWAP
           </button>
