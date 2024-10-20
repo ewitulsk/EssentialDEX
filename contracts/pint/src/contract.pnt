@@ -129,19 +129,20 @@ predicate RemoveLiquidity {
 predicate Swap {
     var user: int;
     var amount_in: int;
-    var token_in: bool;  // true for USDC, false for Ess
+    var token_in: int;  // 1 for USDC, 0 for Ess
     var min_amount_out: int;
+    var amount_out: int;
 
-    state reserve_usdc = mut storage::reserve_usdc;
-    state reserve_ess = mut storage::reserve_ess;
-    state user_usdc_balance = mut storage::usdc_balances[user];
-    state user_ess_balance = mut storage::ess_balances[user];
+    state reserve_usdc = mut storage::reserve_usdc; //(i: 0)
+    state reserve_ess = mut storage::reserve_ess; //(i: 1)
+    state user_usdc_balance = mut storage::usdc_balances[user]; //(i: 5)
+    state user_ess_balance = mut storage::ess_balances[user]; //(i: 6)
 
-    // // Calculate the amount out based on the constant product formula
-    // var amount_out = cond {
-    //     token_in => (amount_in * reserve_ess) / (reserve_usdc + amount_in),
-    //     else => (amount_in * reserve_usdc) / (reserve_ess + amount_in),
-    // };
+    // Calculate the amount out based on the constant product formula
+    constraint amount_out == cond {
+        token_in => (amount_in * reserve_ess) / (reserve_usdc + amount_in),
+        else => (amount_in * reserve_usdc) / (reserve_ess + amount_in),
+    };
 
     // // Ensure the minimum amount out is met
     // constraint amount_out >= min_amount_out;

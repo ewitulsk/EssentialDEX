@@ -71,7 +71,6 @@ export class EssentialClient {
 
     async queryState(contentAddress: ContentAddress, hexKey: String[]){
         let toBeQueried = this.baseUrl+"/query-state/"+contentAddress+"/"+hexKey
-        console.log(toBeQueried)
         let req = await fetch(toBeQueried)
         // console.log(req.status)
         return await(req).json()
