@@ -8,15 +8,19 @@ storage {
 predicate AddLiquidity {
     // var provider: b256;
     var amount_usdc: int;
-    var amount_ess: int;
+    // var amount_ess: int;
     
     state reserve_usdc = mut storage::reserve_usdc;
     state reserve_ess = mut storage::reserve_ess;
+
+    constraint reserve_usdc' == amount_usdc;
+
+
     // state provider_lp_balance = mut storage::lp_balances[provider];
     
     // Update the reserves
-    constraint (reserve_usdc == nil && reserve_usdc' > 0) || reserve_usdc' == reserve_usdc + amount_usdc;
-    constraint (reserve_ess == nil && reserve_ess' > 0) || reserve_ess' == reserve_ess + amount_ess;
+    // constraint (reserve_usdc == nil && reserve_usdc' == amount_usdc) || reserve_usdc' == reserve_usdc + amount_usdc;
+    // constraint reserve_ess' == reserve_ess + amount_ess;
 }
 
 // predicate RemoveLiquidity {

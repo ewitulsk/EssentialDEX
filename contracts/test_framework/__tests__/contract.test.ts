@@ -1,12 +1,17 @@
 import {EssentialClient} from "../src/Essential-TS-SDK/src/rest-client"
-import {SolutionData, PredicateAddress, Mutation, Solution, Word} from "../src/Essential-TS-SDK/src/solutions"
+import {SolutionData, PredicateAddress, Mutation, Solution, Word, Value} from "../src/Essential-TS-SDK/src/solutions"
 import {Account} from "../src/Essential-TS-SDK/src/account"
 import { createHash } from 'crypto';
 
 const LOCAL_SERVER = "https://bigbangblock.builders"
 
+<<<<<<< HEAD
 const CONTRACT = "EC55D953909B85A156853A8C954C3F89A2931BBE8DD7214DC7FA14C0BAE32AB7" 
 const ADD_LIQUIDITY_PREDICATE = "BEF4CBC4A67AA9B6633AA457CE39B0695DB0F592EDD4E6F86868A6F8E8EBA3C2"
+=======
+const CONTRACT = "F7BD71739448FE6644F9BAC5A717E22222C73CB98259DC7AE94A0B4D020C0BEF" 
+const ADD_LIQUIDITY_PREDICATE = "7CAC6B138B69A86747E8E2DC8DBBECE472567868774B006C44152AAE735B4B4D"
+>>>>>>> 417e4c3 (decision variables work)
 const TEST_WALLET_PRIV_KEY = "118AE96C9B7BD0D346C46FFF031AFDB8F5F6F4C62D7D99FA225B5675AA26B70D"
 
 test('test add liquidity', async () => {
@@ -21,30 +26,40 @@ test('test add liquidity', async () => {
         predicate:  ADD_LIQUIDITY_PREDICATE
     } as PredicateAddress
 
-    // let pubkeyHex = Account.from_str(TEST_WALLET_PRIV_KEY).publicKey()
-    // const pubkey: Buffer = Buffer.from(pubkeyHex, 'hex');
-    // const i64Value: bigint = pubkeyToI64(pubkey);
-    // console.log(pubkey)
+    let pubkeyHex = Account.from_str(TEST_WALLET_PRIV_KEY).publicKey()
+    const pubkey: Buffer = Buffer.from(pubkeyHex, 'hex');
+    const i64Value: bigint = pubkeyToI64(pubkey);
+
     let stateMut = {
         key: [0],
-        value: [10]
+        value: [30]
     } as Mutation
 
     let stateMut2 = {
         key: [1],
-        value: [20]
+        value: [50]
     } as Mutation
+
+    let decision_variables = [30] as Value
+
+    // let stateMut2 = {
+    //     key: [1],
+    //     value: [20]
+    // } as Mutation
 
     let solutionData = {
         predicate_to_solve: addLiquidityPredicateAddress,
-        decision_variables: [[10, 20]],
+        decision_variables: [decision_variables],
         transient_data: [],
         state_mutations: [stateMut, stateMut2]
     } as SolutionData
 
-    let solution = new Solution([solutionData])
-    let tx_hash = await essential.submitSolution(solution);
-    console.log(tx_hash)
+    // console.log("Solution Data:")
+    // console.log(solutionData)
+
+    // let solution = new Solution([solutionData])
+    // let tx_hash = await essential.submitSolution(solution);
+    // console.log(tx_hash)
 
     await sleep(5000)
 
