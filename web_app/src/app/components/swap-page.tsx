@@ -3,6 +3,8 @@ import React, { useState, useCallback } from 'react';
 import TokenInput from './token-input';
 import axios from 'axios';
 import { debounce } from 'lodash';
+import WaitingSolveModal from './waiting-solve-modal';
+import Snackbar from './snackbar';
 
 const SwapPage = () => {
   const fetchConversionRate = async (sellToken: string, buyToken: string, setAmount: (amount: string) => void) => {
@@ -32,7 +34,7 @@ const SwapPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
 
-  const disable_review = !sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken
+  const disable_review = !(!sellAmount || !buyAmount || !selectedSellToken || !selectedBuyToken)
 
   const handleSellChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSellAmount(e.target.value)
@@ -104,22 +106,8 @@ const SwapPage = () => {
         </button>
       </form>
 
-      {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 p-5 rounded-lg text-center flex flex-col items-center">
-            <div className="spinner border-t-4 border-blue-500 rounded-full w-16 h-16 mb-4 animate-spin"></div>
-            <p className="text-center w-1/2">Our solvers are on a mission to outsmart every challenge with even better solutions!</p>
-          </div>
-        </div>
-      )}
-
-        {/* Snackbar */}
-        {showSnackbar && (
-          <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white p-3 rounded-lg">
-            Purchase completed!
-          </div>
-        )}
+      <WaitingSolveModal showModal={showModal} />
+      <Snackbar showSnackbar={showSnackbar} />
     </div>
   );
 };
