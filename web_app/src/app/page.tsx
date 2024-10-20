@@ -1,11 +1,11 @@
 'use client'
-import SwapWrapper from "./components/swap-wrapper";
 import Pool from "./components/pool";
 import NewPosition from "./components/new-position";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import SwapWrapper from "./components/swap-wrapper";
 
 export default function Home() {
 

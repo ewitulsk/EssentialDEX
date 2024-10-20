@@ -16,6 +16,7 @@ const Pool: React.FC = () => {
         </div>
 
         <Header/>
+
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start z-10 w-full min-w-[50rem] max-w-4xl">
           <div className="flex justify-between w-full items-center mb-4">
             <h1 className="text-2xl font-bold">Positions</h1>

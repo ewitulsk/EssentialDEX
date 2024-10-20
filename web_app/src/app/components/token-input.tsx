@@ -12,7 +12,7 @@ const TokenInput = ({
   selectedToken,
   onTokenChange,
 }: {
-  label: string;
+  label: string | undefined;
   amount: string;
   onAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedToken: string;
@@ -29,7 +29,8 @@ const TokenInput = ({
   return (
     <div className="flex items-center gap-2">
       <div className="flex flex-col gap-2">
-        <label htmlFor={`${label}Amount`} className="text-sm font-medium">{label}</label>
+
+        { label && <label htmlFor={label} className="text-sm font-medium">{label}</label> }
         <div className="flex gap-2">
           <input
             type="number"
